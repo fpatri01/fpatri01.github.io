@@ -11,11 +11,12 @@ body {
 
 p { 
 	display:block;
-	height: 150px
 	font-family: sans-serif;
 	color: white;
 	background: green;
 	border-radius: 25px;
+	height: 150px;
+
 }
 
 	
