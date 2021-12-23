@@ -6,14 +6,16 @@ h1 {
             font-family: serif;
 }
 body {
-        background-color: khaki;
+        background: khaki;
 }
 
 p { 
 	display:block;
+	height: 150px
 	font-family: sans-serif;
-	color: green;
-	outline-style: solid;
+	color: white;
+	background: green;
+	border-radius: 25px
 }
 
 	
