@@ -1,11 +1,13 @@
 body {
 	align-items: center;
+}
+
 h1 {
 	margin: auto;
 }
 
 p { 
-	display:block
+	display:block;
 	text-decoration: bold;
 	color: green;
 }
