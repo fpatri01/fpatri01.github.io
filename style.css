@@ -16,7 +16,9 @@ p {
 	background: green;
 	border-radius: 25px;
 	height: 150px;
-	background-image: url(grass-background.png)
+	background-image: url(grass-background.png);
+	background-size: contain;
+	background-repeat: no-repeat;
 
 }
 
