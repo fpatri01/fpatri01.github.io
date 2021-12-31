@@ -18,7 +18,7 @@ p {
 	height: 150px;
 	background-image: url(grass-background.png);
 	background-size: contain;
-	background-repeat: no-repeat;
+	background-repeat: repeat-x;
 
 }
 
