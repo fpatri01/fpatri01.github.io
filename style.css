@@ -3,10 +3,12 @@
 }
 
 h1 {
-            font-family: serif;
+        font-family: serif;
+	color: white
+
 }
 body {
-        background: khaki;
+        background: #2E8B57;
 }
 
 p { 
