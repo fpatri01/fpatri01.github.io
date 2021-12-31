@@ -9,6 +9,8 @@ h1 {
 }
 body {
         background: #00ff7e;
+	background-image: url("grass-background.png");
+	background-position: 0 100%;
 	
 }
 
