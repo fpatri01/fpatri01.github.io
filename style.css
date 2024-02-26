@@ -19,7 +19,7 @@ p {
 	background: green;
 	border-radius: 25px;
 	height: 150px;
-	background-image: url("grass-background.png"), url("grass-background.png");
+	background-image: url("white"), url("white");
 	background-position: 0 100%, 10% 100%;
 	background-repeat: repeat-x;
 	background-size: contain;
@@ -44,7 +44,7 @@ li {
 
 li a {
 
-  color: #000;
+  color: #555;
   padding: 8px 16px;
   text-decoration: none;
 }
