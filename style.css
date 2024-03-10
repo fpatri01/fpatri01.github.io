@@ -37,9 +37,12 @@ ul {
   position: auto; /* Make it stick, even on scroll */
   overflow: fixed; /* Enable scrolling if the sidenav has too much content */
 }
+dl {
+/* no format */
+}
 
 li {
-  display: inline;
+/*  display: inline;/*
 }
 
 li a {
