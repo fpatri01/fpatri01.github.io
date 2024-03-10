@@ -18,6 +18,19 @@ p {
 	color: white;
 	background: green;
 	border-radius: 25px;
+	height: 550px;
+	background-image: url("white"), url("white");
+	background-position: 0 100%, 10% 100%;
+	background-repeat: repeat-x;
+	background-size: contain;
+    text-align: center;
+}
+p { 
+	display:block;
+	font-family: sans-serif;
+	color: white;
+	background: green;
+	border-radius: 25px;
 	height: 150px;
 	background-image: url("white"), url("white");
 	background-position: 0 100%, 10% 100%;
@@ -40,7 +53,9 @@ ul {
 dd {
 /* no format */
 }
-
+d1 {
+/* no format */
+}
 li {
 /*  display: inline;/*
 }
