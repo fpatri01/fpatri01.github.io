@@ -12,19 +12,19 @@ body {
 	
 }
 
-p { 
+/*p{ 
 	display:block;
 	font-family: sans-serif;
 	color: white;
 	background: green;
 	border-radius: 25px;
-	height: 550px;
+	height: 250px;
 	background-image: url("white"), url("white");
 	background-position: 0 100%, 10% 100%;
 	background-repeat: repeat-x;
 	background-size: contain;
     text-align: center;
-}
+}/*
 p1{ 
 	display:block;
 	font-family: sans-serif;
@@ -50,8 +50,11 @@ ul {
   position: auto; /* Make it stick, even on scroll */
   overflow: fixed; /* Enable scrolling if the sidenav has too much content */
 }
-/*dd { text-align: center;}/*
-/*d1 {text-align: center;} /*
+dd{ 	font-family: sans-serif;
+	color: white;}
+d1{	font-family: sans-serif;
+	color: white;
+}
 
 li {
 display: inline;
