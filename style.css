@@ -50,12 +50,9 @@ ul {
   position: auto; /* Make it stick, even on scroll */
   overflow: fixed; /* Enable scrolling if the sidenav has too much content */
 }
-dd {
-  text-align: center;
-}
-d1 {
-  text-align: center;
-}
+/*dd { text-align: center;}/*
+/*d1 {text-align: center;} /*
+
 li {
 display: inline;
 }
