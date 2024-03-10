@@ -25,7 +25,7 @@ p {
 	background-size: contain;
     text-align: center;
 }
-p { 
+p1{ 
 	display:block;
 	font-family: sans-serif;
 	color: white;
@@ -51,13 +51,13 @@ ul {
   overflow: fixed; /* Enable scrolling if the sidenav has too much content */
 }
 dd {
-/* no format */
+  text-align: center;
 }
 d1 {
-/* no format */
+  text-align: center;
 }
 li {
-/*  display: inline;/*
+display: inline;
 }
 
 li a {
