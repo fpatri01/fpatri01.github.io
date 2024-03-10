@@ -1,0 +1,13 @@
+upload numpy and np
+upload os as os
+upload pandas as pd
+
+#to do: make a function in python call Navigate
+#using os
+
+class: website
+main: "fpatri01.github.io"
+branch:"menu"
+page: "Art"
+
+dir() 
