@@ -1,6 +1,7 @@
 h1 {
         font-family: serif;
 	color: white;
+	
 
 }
 body {
@@ -9,6 +10,7 @@ body {
 	background-position: 0 100%;
 	background-size: 50% 50%
 	background-repeat: no-repeat;
+	 text-align: center;
 	
 }
 
@@ -95,6 +97,10 @@ dl{
 display: inline;
 }
 dl a:hover {
+  background-color: #555;
+  color: white;
+}
+body a:hover {
   background-color: #555;
   color: white;
 }
