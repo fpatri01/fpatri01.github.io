@@ -51,9 +51,11 @@ ul {
   overflow: fixed; /* Enable scrolling if the sidenav has too much content */
 }
 dd{ 	font-family: sans-serif;
-	color: white;}
+	color: white;
+  	background-position: 0 50%, 10% 50%;}
 d1{	font-family: sans-serif;
 	color: white;
+   	background-position: 0 50%, 10% 50%;
 }
 
 li {
