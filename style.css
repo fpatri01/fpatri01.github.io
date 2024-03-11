@@ -12,19 +12,19 @@ body {
 	
 }
 
-/*p{ 
+p{ 
 	display:block;
 	font-family: sans-serif;
 	color: white;
 	background: green;
 	border-radius: 25px;
-	height: 250px;
+	height: 150px;
 	background-image: url("white"), url("white");
 	background-position: 0 100%, 10% 100%;
 	background-repeat: repeat-x;
 	background-size: contain;
     text-align: center;
-}/*
+}
 p1{ 
 	display:block;
 	font-family: sans-serif;
