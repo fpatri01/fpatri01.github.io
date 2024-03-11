@@ -52,10 +52,17 @@ ul {
 }
 dd{ 	font-family: sans-serif;
 	color: white;
-  	background-position: 0 50%, 10% 50%;}
+  	background-position: 0 50%, 10% 50%;
+  	height: auto; /* Full height */
+  position: auto; /* Make it stick, even on scroll */
+  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
+  }
 d1{	font-family: sans-serif;
 	color: white;
    	background-position: 0 50%, 10% 50%;
+   	  height: auto; /* Full height */
+  position: auto; /* Make it stick, even on scroll */
+  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
 }
 
 li {
