@@ -5,7 +5,7 @@ h1 {
 
 }
 body {
-        background: #00ff7e;
+        background: #00;
 	background-image: url("grass-background.png");
 	background-position: 0 100%;
 	background-size: 50% 50%
@@ -47,7 +47,7 @@ ul {
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: #f1f1f1;
+  background-color: #00;
   height: auto; /* Full height */
   position: auto; /* Make it stick, even on scroll */
   overflow: fixed; /* Enable scrolling if the sidenav has too much content */
@@ -73,7 +73,7 @@ display: inline;
 
 li a {
 
-  color: #555;
+  color: #00ff7e;
   padding: 8px 16px;
   text-decoration: none;
 }
