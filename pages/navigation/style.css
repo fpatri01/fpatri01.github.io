@@ -1,4 +1,108 @@
-<iframe> {width = 300
-          height = 500}
-//we want the art page to look like the home page, except with sections, images, and the appropriate link.
-/* how to comment out text etc *\
+<iframe> {width = 10000
+          height = 10000}
+h1 {
+        font-family: serif;
+	color: white;
+	
+
+}
+body {
+        background: #00ff7e;
+	background-image: url("grass-background.png");
+	background-position: 0 100%;
+	background-size: 50% 50%
+	background-repeat: no-repeat;
+	 text-align: center;
+	
+}
+
+p{ 
+	display:block;
+	font-family: sans-serif;
+	color: white;
+	background: green;
+	border-radius: 25px;
+	height: 150px;
+	background-image: url("white"), url("white");
+	background-position: 0 100%, 10% 100%;
+	background-repeat: repeat-x;
+	background-size: contain;
+    text-align: center;
+}
+p1{ 
+	display:block;
+	font-family: sans-serif;
+	color: white;
+	background: green;
+	border-radius: 25px;
+	height: 150px;
+	background-image: url("white"), url("white");
+	background-position: 0 100%, 10% 100%;
+	background-repeat: repeat-x;
+	background-size: contain;
+    text-align: center;
+}
+
+	
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #f1f1f1;
+  height: auto; /* Full height */
+  position: auto; /* Make it stick, even on scroll */
+  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
+}
+dd{ 	font-family: sans-serif;
+	color: white;
+  	background-position: 0 50%, 10% 50%;
+  	height: auto; /* Full height */
+  position: auto; /* Make it stick, even on scroll */
+  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
+  }
+d1{	font-family: sans-serif;
+	color: white;
+   	background-position: 0 50%, 10% 50%;
+   	  height: auto; /* Full height */
+  position: auto; /* Make it stick, even on scroll */
+  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
+}
+
+li {
+display: inline;
+}
+
+li a {
+
+  color: #555;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+li a:hover {
+  background-color: #555;
+  color: white;
+}
+dd{  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #f1f1f1;
+  height: auto; /* Full height */
+  position: auto; /* Make it stick, even on scroll */
+  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
+
+}
+dl{
+display: inline;
+}
+dl a:hover {
+  background-color: #555;
+  color: white;
+}
+body a:hover {
+  background-color: #555;
+  color: white;
+}
