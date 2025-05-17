@@ -1,20 +1,11 @@
 <DOCTYPE html>
-<h1>Hello! Welcome to the tip calculator!</h1>  
+<head>
+      <script type="module" src="https://pyscript.net/releases/2025.2.1/core.js"></script>
+
+</head>  
 <body>
+<h1>Hello! Welcome to the tip calculator!</h1>
+<script type="py" src="./main.py" config="./pyscript.toml" terminal></script>
 
-<script>
-  
-//calculate the tip
-const bill = 100*prompt('How much was the bill for your meal? $');
-const tip = prompt('What percent would you like to tip? Please select 10, 15 or 20:');
-
-//calculate the total per person
-const total = (tip/100)*bill + bill;
-const people = prompt('Split the bill between how many people?');
-const total_each = Math.ceil(total/people)/100;
-
-//print total per person
-alert('The cost per person is $' + total_each + ' per person');
-</script>
 </body>
 </DOCTYPE>
