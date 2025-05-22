@@ -14,5 +14,5 @@ var total_each = total/people;
 var total_each = total_each.toFixed(2);
 
 //print total per person
-alert("The cost per person is $ " + total_each + " per person")
+alert("The cost per person is $ " + total_each)
 } )
