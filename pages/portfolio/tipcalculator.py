@@ -1,13 +1,18 @@
-print("Hello. Welcome to the tip calculator!")
+//greet the user
+alert('Hello. Welcome to the tip calculator!') ;
 
-#calculate the tip
-bill = float(input("How much was the bill for your meal? \n $"))
-tip = int(input("What percent would you like to tip? Please select 10, 15 or 20: \n"))
+//pause for the user to input data...
+button.addEventListener('click', () => {
 
-#calculate the total per person
-total = (tip/100)*bill + bill
-people = int(input("Split the bill between how many people? \n"))
-total_each = round(total/people, 2)
+//calculate the tip
+let bill = Number(document.getElementById('bill').value);
+let tip = Number(document.getElementById('tip').value);
+//calculate the total per person
+let total = (tip/100)*bill + bill;
+let people = Number(document.getElementById('people').value);
+var total_each = total/people;
+var total_each = total_each.toFixed(2);
 
-#print total per person
-print(f"The cost per person is \n ${total_each:.2f} per person")
+//print total per person
+alert("The cost per person is $ " + total_each + " per person")
+} )
