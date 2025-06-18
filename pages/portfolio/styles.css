@@ -3,3 +3,8 @@ button {
   color: white;
   border-radius: 40%; 
 }
+ body {
+   background-color: aliceblue;
+   display: grid;
+   color: black; 
+ }
