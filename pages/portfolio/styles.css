@@ -1,9 +1,9 @@
-button {
+.button {
   background-color: blue;
   color: white;
   border-radius: 40%; 
 }
- body {
+ .body {
    background-color: aliceblue;
    display: grid;
    color: black; 
