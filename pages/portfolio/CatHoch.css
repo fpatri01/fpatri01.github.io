@@ -6,7 +6,7 @@ border-radius: 2%;
 display: flex; 
 justify-content: center;
 align-items: center; 
-align-content: sapce-evenly;
+align-content: sapce-between;
 margin: 10px;
 padding: 0px;
 }
