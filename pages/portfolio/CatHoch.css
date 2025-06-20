@@ -1,0 +1,15 @@
+div { 
+background-color: berry red;
+border-weight: 20 px; 
+border-radius: 2%;
+display: flexbox; 
+margin: 0px;
+padding: 0px;
+}
+
+p1 {
+font-weight: bold;
+}
+p2{
+opacity: 70%;
+}
