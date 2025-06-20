@@ -1,15 +1,19 @@
 div { 
-background-color: berry red;
+background-color: #A01641;
 border-weight: 20 px; 
 border-radius: 2%;
 display: flexbox; 
 margin: 0px;
 padding: 0px;
 }
-
+h1 {
+font-style: italics;
+}
 p1 {
 font-weight: bold;
 }
 p2{
 opacity: 70%;
 }
+body {
+background-image: url(
