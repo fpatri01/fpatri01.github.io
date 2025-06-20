@@ -2,7 +2,8 @@ div {
 background-color: #A01641;
 border-weight: 20 px; 
 border-radius: 2%;
-display: flexbox; 
+display: flex; 
+justify-content: center;
 margin: 0px;
 padding: 0px;
 }
