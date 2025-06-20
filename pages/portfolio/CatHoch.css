@@ -1,6 +1,7 @@
 div { 
 background-color: #A01641;
 border-weight: 20 px; 
+border-color: #FFFF00;
 border-radius: 2%;
 display: flex; 
 justify-content: center;
