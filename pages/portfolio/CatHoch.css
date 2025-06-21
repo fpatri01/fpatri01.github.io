@@ -1,28 +1,44 @@
-*{
-  margin: 10px;
-  padding: 10px;  
-}
-div#container { 
-background-color: #FFC0CB;
-border-weight: 20 px; 
-border-color: #FFFF00;
-border-radius: 2%;
-display: flex; 
-justify-content: center;
-align-items: center; 
-align-content: sapce-between;
-margin: 10px;
-padding: 0px;
+div {
+  width: auto;
+  height: auto;
+  border-radius: 2%;
+  color: grey;
+  display: flexbox;
+  text-align: center;
+  position:  center;
+  margin: 20px;
+  }
+#container {
+  background-color: aliceblue;
+
 }
 h1 {
-font-style: italic;
+  font-style: italic;
 }
-p1 {
-font-weight: bold;
-}
-p2{
-opacity: 70%;
-}
+p1{font-weight: bold;}
 body {
-background-image: url("portfolio/cat hoch photos/lights-guitar-action.jpg");
+  background-color: rgb(176, 218, 255);
+}
+div#container::onhover{
+  scale: 105%;
+}
+
+div img {
+  width: 33%;
+  height: 33%;
+  display: flexbox;
+  border-color: magenta;
+  border-radius: 2%;
+  border-style: groove;
+  align-items: center;
+  padding: 10px;
+
+}
+div img:hover{
+scale: 110%;
+}
+
+*{
+  margin: 10px;
+  padding: 10px;
 }
