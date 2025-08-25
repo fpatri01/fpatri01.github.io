@@ -1,106 +1,223 @@
-h1 {
-        font-family: serif;
-	color: white;
-	
-
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
 body {
-        background: #00ff7e;
-	background-image: url("grass-background.png");
-	background-position: 0 100%;
-	background-size: 50% 50%
-	background-repeat: no-repeat;
-	 text-align: center;
-	
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: #2c3e2d;
+    background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 100%);
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-p{ 
-	display:block;
-	font-family: sans-serif;
-	color: white;
-	background: green;
-	border-radius: 25px;
-	height: 150px;
-	background-image: url("white"), url("white");
-	background-position: 0 100%, 10% 100%;
-	background-repeat: repeat-x;
-	background-size: contain;
+/* Typography hierarchy */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a5d1a;
     text-align: center;
+    margin: 2rem 0;
+    text-shadow: 2px 2px 4px rgba(26, 93, 26, 0.1);
+    letter-spacing: -0.02em;
 }
-p1{ 
-	display:block;
-	font-family: sans-serif;
-	color: white;
-	background: green;
-	border-radius: 25px;
-	height: 150px;
-	background-image: url("white"), url("white");
-	background-position: 0 100%, 10% 100%;
-	background-repeat: repeat-x;
-	background-size: contain;
+
+p, p1 {
+    font-size: 1.1rem;
+    color: #2c5530;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
 }
 
-	
+/* Navigation styling */
 ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  background-color: #f1f1f1;
-  height: auto; /* Full height */
-  position: auto; /* Make it stick, even on scroll */
-  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
-}
-dd{ 	font-family: sans-serif;
-	color: white;
-  	background-position: 0 50%, 10% 50%;
-  	height: auto; /* Full height */
-  position: auto; /* Make it stick, even on scroll */
-  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
-  }
-d1{	font-family: sans-serif;
-	color: white;
-   	background-position: 0 50%, 10% 50%;
-   	  height: auto; /* Full height */
-  position: auto; /* Make it stick, even on scroll */
-  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: linear-gradient(90deg, #228b22, #32cd32, #228b22);
+    border-radius: 50px;
+    padding: 15px 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(34, 139, 34, 0.3);
+    max-width: 600px;
 }
 
 li {
-display: inline;
+    margin: 0 10px;
 }
 
 li a {
-
-  color: #555;
-  padding: 8px 16px;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    display: block;
 }
 
-/* Change the link color on hover */
 li a:hover {
-  background-color: #555;
-  color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-dd{  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  background-color: #f1f1f1;
-  height: auto; /* Full height */
-  position: auto; /* Make it stick, even on scroll */
-  overflow: fixed; /* Enable scrolling if the sidenav has too much content */
 
+/* Content sections with symmetrical layout */
+.content-section {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem auto;
+    box-shadow: 0 8px 25px rgba(34, 139, 34, 0.1);
+    border: 2px solid #90ee90;
+    max-width: 900px;
 }
-dl{
-display: inline;
+
+/* Project links styling */
+dd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
-dl a:hover {
-  background-color: #555;
-  color: white;
+
+d1, dl {
+    display: block;
+    margin: 0;
 }
-body a:hover {
-  background-color: #555;
-  color: white;
+
+dd a, .project-link {
+    color: #228b22;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 12px 24px;
+    border: 2px solid #228b22;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    min-width: 200px;
+    text-align: center;
+    background: linear-gradient(45deg, transparent 0%, rgba(34, 139, 34, 0.05) 100%);
+}
+
+dd a:hover, .project-link:hover {
+    background: #228b22;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(34, 139, 34, 0.3);
+}
+
+/* Special styling for the final project link */
+body > a {
+    color: #1a5d1a;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: block;
+    text-align: center;
+    margin: 3rem auto;
+    padding: 15px 30px;
+    border: 3px solid #1a5d1a;
+    border-radius: 12px;
+    max-width: 400px;
+    background: linear-gradient(45deg, #f0fff0, #e8f5e8);
+    transition: all 0.3s ease;
+}
+
+body > a:hover {
+    background: #1a5d1a;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(26, 93, 26, 0.4);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 20px;
+    }
+    
+    li {
+        margin: 5px 0;
+        width: 200px;
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    p, p1 {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+    
+    dd a, .project-link {
+        min-width: 250px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    li a {
+        font-size: 0.9rem;
+    }
+    
+    dd a, .project-link {
+        min-width: 200px;
+        padding: 10px 16px;
+    }
+}
+
+/* Additional visual enhancements */
+br {
+    line-height: 2;
+}
+
+/* Subtle animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.content-section, h1, ul {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Green accent elements */
+.content-section::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #228b22, #32cd32, #90ee90, #228b22);
+    border-radius: 17px;
+    z-index: -1;
+    opacity: 0.3;
 }
