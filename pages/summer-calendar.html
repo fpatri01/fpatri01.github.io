@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faith's Summer 2026 Schedule</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --ink: #1a1410;
+    --rust: #c4502a;
+    --sage: #6b8f71;
+    --gold: #d4a843;
+    --dust: #b8a99a;
+    --pale: #e8e0d5;
+    --teal: #3d7a6e;
+    --lavender: #8b7eb8;
+    --rose: #b85a6e;
+
+    /* Task colors */
+    --job: var(--rust);
+    --meal: var(--sage);
+    --snail: var(--lavender);
+    --marketing: var(--teal);
+    --coursework: var(--gold);
+    --web: var(--rose);
+    --selfcare: var(--dust);
+    --boston: #2a6496;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    min-height: 100vh;
+  }
+
+  header {
+    padding: 40px 48px 24px;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1;
+    font-style: italic;
+  }
+
+  header h1 span {
+    display: block;
+    font-style: normal;
+    font-size: 0.5em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 480px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .phases {
+    display: flex;
+    border-bottom: 2px solid var(--ink);
+    overflow-x: auto;
+  }
+
+  .phase {
+    flex: 1;
+    min-width: 160px;
+    padding: 10px 16px;
+    border-right: 1px solid var(--dust);
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .phase:last-child { border-right: none; }
+
+  .phase:hover { background: var(--pale); }
+
+  .phase.active {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .phase-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.6;
+  }
+
+  .phase-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    margin-top: 2px;
+  }
+
+  .phase-dates {
+    font-size: 10px;
+    margin-top: 2px;
+    opacity: 0.7;
+  }
+
+  .phase-badge {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 9px;
+    background: var(--rust);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .phase.active .phase-badge {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .main {
+    padding: 32px 48px;
+    max-width: 1200px;
+  }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(7, 1fr);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+
+  .day-header {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid var(--ink);
+    border-right: 1px solid var(--pale);
+    background: var(--pale);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .day-header:first-child {
+    background: transparent;
+    border-right: 1px solid var(--ink);
+  }
+
+  .day-header.light-day {
+    color: var(--dust);
+  }
+
+  .day-header.off-day {
+    background: #ede8e0;
+    color: var(--dust);
+    font-style: italic;
+  }
+
+  .time-label {
+    padding: 6px 8px;
+    text-align: right;
+    font-size: 10px;
+    color: var(--dust);
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--pale);
+    white-space: nowrap;
+  }
+
+  .cell {
+    border-right: 1px solid var(--pale);
+    border-bottom: 1px solid var(--pale);
+    min-height: 48px;
+    position: relative;
+    padding: 4px;
+  }
+
+  .cell:last-child { border-right: none; }
+
+  .cell.off { background: repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.03) 4px, rgba(0,0,0,0.03) 8px); }
+
+  .block {
+    border-radius: 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    line-height: 1.3;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: default;
+    transition: opacity 0.15s;
+  }
+
+  .block:hover { opacity: 0.85; }
+
+  .block.job { background: color-mix(in srgb, var(--job) 18%, transparent); color: var(--job); border-left: 3px solid var(--job); }
+  .block.meal { background: color-mix(in srgb, var(--meal) 18%, transparent); color: color-mix(in srgb, var(--meal) 80%, var(--ink)); border-left: 3px solid var(--meal); }
+  .block.snail { background: color-mix(in srgb, var(--snail) 18%, transparent); color: var(--snail); border-left: 3px solid var(--snail); }
+  .block.marketing { background: color-mix(in srgb, var(--marketing) 18%, transparent); color: var(--teal); border-left: 3px solid var(--marketing); }
+  .block.coursework { background: color-mix(in srgb, var(--coursework) 22%, transparent); color: color-mix(in srgb, var(--coursework) 70%, var(--ink)); border-left: 3px solid var(--coursework); }
+  .block.web { background: color-mix(in srgb, var(--web) 18%, transparent); color: var(--web); border-left: 3px solid var(--web); }
+  .block.selfcare { background: color-mix(in srgb, var(--selfcare) 25%, transparent); color: color-mix(in srgb, var(--selfcare) 60%, var(--ink)); border-left: 3px solid var(--selfcare); }
+  .block.boston { background: color-mix(in srgb, var(--boston) 15%, transparent); color: var(--boston); border-left: 3px solid var(--boston); }
+
+  .notes-section {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .note-card {
+    border: 1px solid var(--pale);
+    padding: 16px 20px;
+    background: white;
+  }
+
+  .note-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+
+  .note-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .note-card li {
+    font-size: 11px;
+    line-height: 1.5;
+    padding-left: 14px;
+    position: relative;
+    color: #444;
+  }
+
+  .note-card li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--rust);
+  }
+
+  .phase-content { display: none; }
+  .phase-content.active { display: block; }
+
+  .phase-intro {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .phase-intro-text {
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .phase-intro-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+
+  .phase-intro-text p {
+    font-size: 11.5px;
+    line-height: 1.7;
+    color: #555;
+    max-width: 480px;
+  }
+
+  .phase-stats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    border: 1px solid var(--pale);
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--rust);
+  }
+
+  .stat-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dust);
+    margin-top: 4px;
+  }
+
+  .priority-flag {
+    display: inline-block;
+    background: var(--rust);
+    color: white;
+    font-size: 9px;
+    padding: 2px 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  footer {
+    padding: 24px 48px;
+    border-top: 1px solid var(--pale);
+    font-size: 10px;
+    color: var(--dust);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 700px) {
+    header, .main, footer { padding-left: 20px; padding-right: 20px; }
+    .week-grid { font-size: 9px; }
+    .day-header, .time-label { padding: 6px 4px; }
+    .cell { min-height: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>
+    <span>Summer 2026</span>
+    Faith's Time-Block Calendar
+  </h1>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--job)"></div> Job Search</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--meal)"></div> Meal Prep</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--snail)"></div> Snail Mail Club</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--marketing)"></div> Marketing</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--coursework)"></div> Coursework</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--web)"></div> Web Volunteer</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--selfcare)"></div> Self Care</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--boston)"></div> Boston Move Plan</div>
+  </div>
+</header>
+
+<div class="phases">
+  <div class="phase active" onclick="showPhase(0)">
+    <div class="phase-label">Phase 1</div>
+    <div class="phase-name">Sprint</div>
+    <div class="phase-dates">Jun 1 – Jun 12</div>
+    <div class="phase-badge">NOW</div>
+  </div>
+  <div class="phase" onclick="showPhase(1)">
+    <div class="phase-label">Phase 2</div>
+    <div class="phase-name">Search Surge</div>
+    <div class="phase-dates">Jun 13 – Jul 31</div>
+  </div>
+  <div class="phase" onclick="showPhase(2)">
+    <div class="phase-label">Phase 3</div>
+    <div class="phase-name">Sustain</div>
+    <div class="phase-dates">Aug 1 – Sep 7</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- PHASE 1 -->
+  <div class="phase-content active" id="phase-0">
+    <div class="phase-intro">
+      <div class="phase-intro-text">
+        <h2>Sprint <span class="priority-flag">Coursework deadline Jun 12</span></h2>
+        <p>Two weeks of focused intensity. Graduate coursework takes the morning prime hours. Job search gets daily afternoon time. Snail mail club launches this month — plan and write letters mid-week. Keep everything else to minimums so you can hit that June 12 deadline without burning out.</p>
+      </div>
+      <div class="phase-stats">
+        <div class="stat"><div class="stat-num">2</div><div class="stat-label">Courses due</div></div>
+        <div class="stat"><div class="stat-num">5</div><div class="stat-label">Snail readers</div></div>
+        <div class="stat"><div class="stat-num">Jun 12</div><div class="stat-label">Hard deadline</div></div>
+      </div>
+    </div>
+
+    <div class="week-grid">
+      <!-- Headers -->
+      <div class="day-header" style="background:transparent;border-right:1px solid var(--ink)"></div>
+      <div class="day-header light-day">Mon<br><span style="font-size:9px;opacity:0.6">lighter</span></div>
+      <div class="day-header">Tue</div>
+      <div class="day-header">Wed</div>
+      <div class="day-header">Thu</div>
+      <div class="day-header">Fri</div>
+      <div class="day-header off-day">Sat<br><span style="font-size:9px">rest</span></div>
+      <div class="day-header">Sun</div>
+
+      <!-- 9 AM -->
+      <div class="time-label">9 AM</div>
+      <div class="cell"><div class="block selfcare">Morning routine</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Morning routine</div></div>
+
+      <!-- 10 AM -->
+      <div class="time-label">10 AM</div>
+      <div class="cell"><div class="block job">Job search: research & apps</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block meal">Meal prep Sunday</div></div>
+
+      <!-- 11 AM -->
+      <div class="time-label">11 AM</div>
+      <div class="cell"><div class="block job">Job search</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell"><div class="block snail">Write letters (5 readers)</div></div>
+      <div class="cell"><div class="block coursework">Coursework</div></div>
+      <div class="cell"><div class="block job">Job search</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block meal">Meal prep</div></div>
+
+      <!-- 12 PM -->
+      <div class="time-label">12 PM</div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Rest / free</div></div>
+
+      <!-- 1 PM -->
+      <div class="time-label">1 PM</div>
+      <div class="cell"><div class="block selfcare">Crafts / self care</div></div>
+      <div class="cell"><div class="block job">Job search: networking</div></div>
+      <div class="cell"><div class="block web">Website volunteer (1.5h)</div></div>
+      <div class="cell"><div class="block job">Job search: apps</div></div>
+      <div class="cell"><div class="block marketing">Marketing / social</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block job">Job search review</div></div>
+
+      <!-- 2 PM -->
+      <div class="time-label">2 PM</div>
+      <div class="cell"><div class="block selfcare">Errands / hygiene</div></div>
+      <div class="cell"><div class="block coursework">Coursework review</div></div>
+      <div class="cell"><div class="block web">Website volunteer (cont.)</div></div>
+      <div class="cell"><div class="block snail">Snail mail: address/stamp</div></div>
+      <div class="cell"><div class="block marketing">Marketing planning</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Wind down</div></div>
+
+      <!-- 3 PM -->
+      <div class="time-label">3 PM</div>
+      <div class="cell"><div class="block selfcare">Free / rest</div></div>
+      <div class="cell"><div class="block selfcare">Free / rest</div></div>
+      <div class="cell"><div class="block selfcare">Free / rest</div></div>
+      <div class="cell"><div class="block selfcare">Free / rest</div></div>
+      <div class="cell"><div class="block boston">Boston: start savings plan</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Free</div></div>
+    </div>
+
+    <div class="notes-section">
+      <div class="note-card">
+        <h3>🎯 Phase 1 Priorities</h3>
+        <ul>
+          <li>Coursework is the non-negotiable — protect morning blocks Tue–Fri until Jun 12</li>
+          <li>Job search stays alive with 1–2 hours daily Mon/Tue/Thu/Fri afternoon</li>
+          <li>Write & mail your 5 launch letters mid-week (Wed is ideal)</li>
+          <li>Meal prep Sunday keeps nutrition efficient all week</li>
+          <li>3h website volunteer: split Wed 1–3pm + one flex slot</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h3>📬 Snail Mail Launch</h3>
+        <ul>
+          <li>Write 5 personal letters this month — handwritten or typed</li>
+          <li>Set up a simple sign-up page or form for August expansion</li>
+          <li>Wednesday is your letter-writing afternoon this phase</li>
+          <li>Track reader addresses in a simple spreadsheet</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h3>🦞 Boston Move: First Steps</h3>
+        <ul>
+          <li>Friday 3pm: draft a simple budget comparing FL vs Boston cost of living</li>
+          <li>Start a "Boston" notes doc — jot down anyone you know in the area</li>
+          <li>Identify what salary range makes the move financially viable</li>
+          <li>No pressure yet — just plant the seed and start asking around quietly</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-content" id="phase-1">
+    <div class="phase-intro">
+      <div class="phase-intro-text">
+        <h2>Search Surge</h2>
+        <p>Coursework is done. This is your biggest job search push before the Aug 1 deadline. Job search gets prime morning hours every weekday. Snail mail club runs monthly rhythm. Marketing for August sign-ups starts mid-June. Website volunteering stays consistent. Self care gets intentional weekend blocks.</p>
+      </div>
+      <div class="phase-stats">
+        <div class="stat"><div class="stat-num">7</div><div class="stat-label">wks of push</div></div>
+        <div class="stat"><div class="stat-num">Aug 1</div><div class="stat-label">Job deadline</div></div>
+        <div class="stat"><div class="stat-num">3h</div><div class="stat-label">Web/week</div></div>
+      </div>
+    </div>
+
+    <div class="week-grid">
+      <div class="day-header" style="background:transparent;border-right:1px solid var(--ink)"></div>
+      <div class="day-header light-day">Mon<br><span style="font-size:9px;opacity:0.6">lighter</span></div>
+      <div class="day-header">Tue</div>
+      <div class="day-header">Wed</div>
+      <div class="day-header">Thu</div>
+      <div class="day-header">Fri</div>
+      <div class="day-header off-day">Sat<br><span style="font-size:9px">rest</span></div>
+      <div class="day-header">Sun</div>
+
+      <div class="time-label">9 AM</div>
+      <div class="cell"><div class="block selfcare">Morning routine</div></div>
+      <div class="cell"><div class="block job">Job search: apps</div></div>
+      <div class="cell"><div class="block job">Job search: apps</div></div>
+      <div class="cell"><div class="block job">Job search: apps</div></div>
+      <div class="cell"><div class="block job">Job search: apps</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Morning routine</div></div>
+
+      <div class="time-label">10 AM</div>
+      <div class="cell"><div class="block job">Job search: research</div></div>
+      <div class="cell"><div class="block job">Job search: tailoring</div></div>
+      <div class="cell"><div class="block job">Job search: networking</div></div>
+      <div class="cell"><div class="block job">Job search: follow-ups</div></div>
+      <div class="cell"><div class="block job">Job search: week review</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block meal">Meal prep Sunday</div></div>
+
+      <div class="time-label">11 AM</div>
+      <div class="cell"><div class="block marketing">Snail mail marketing</div></div>
+      <div class="cell"><div class="block web">Website volunteer</div></div>
+      <div class="cell"><div class="block snail">Snail mail writing</div></div>
+      <div class="cell"><div class="block web">Website volunteer</div></div>
+      <div class="cell"><div class="block marketing">Aug sign-up marketing</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block meal">Meal prep</div></div>
+
+      <div class="time-label">12 PM</div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Rest / free</div></div>
+
+      <div class="time-label">1 PM</div>
+      <div class="cell"><div class="block selfcare">Crafts / hobby</div></div>
+      <div class="cell"><div class="block web">Website volunteer (cont.)</div></div>
+      <div class="cell"><div class="block snail">Address + mail letters</div></div>
+      <div class="cell"><div class="block marketing">Content creation</div></div>
+      <div class="cell"><div class="block selfcare">Cello / creative</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Crafts / cello</div></div>
+
+      <div class="time-label">2 PM</div>
+      <div class="cell"><div class="block selfcare">Errands / hygiene</div></div>
+      <div class="cell"><div class="block selfcare">Self-care planning</div></div>
+      <div class="cell"><div class="block selfcare">Free / rest</div></div>
+      <div class="cell"><div class="block boston">Boston: housing outreach</div></div>
+      <div class="cell"><div class="block selfcare">Week wind-down</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Weekly planning</div></div>
+
+      <div class="time-label">3 PM</div>
+      <div class="cell"><div class="block selfcare">Free</div></div>
+      <div class="cell"><div class="block selfcare">Free</div></div>
+      <div class="cell"><div class="block selfcare">Free</div></div>
+      <div class="cell"><div class="block boston">Boston: savings tracker</div></div>
+      <div class="cell"><div class="block selfcare">Free</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Free</div></div>
+    </div>
+
+    <div class="notes-section">
+      <div class="note-card">
+        <h3>💼 Job Search Rhythm</h3>
+        <ul>
+          <li>Tue–Thu 9–11am: deep work — write, tailor, apply</li>
+          <li>Mon 10am: research new postings; gentle start to the week</li>
+          <li>Fri 9–10am: follow-ups and weekly metrics review</li>
+          <li>Track: # apps sent, # responses, # interviews per week</li>
+          <li>Target: 3–5 tailored applications per week</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h3>📬 Snail Mail + Marketing</h3>
+        <ul>
+          <li>Wednesday is letter-writing day every week</li>
+          <li>Mon + Fri 11am: marketing push for August sign-ups</li>
+          <li>Goal: grow from 5 readers to a larger August cohort</li>
+          <li>Use simple social posts, word of mouth, or a landing page</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h3>🌿 Self Care Anchors</h3>
+        <ul>
+          <li>Saturday is protected — no structured work</li>
+          <li>Cello practice: Fri + Sun afternoons</li>
+          <li>Tuesday 2pm: intentional self-care planning slot</li>
+          <li>Sunday evening: weekly planning for next week</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h3>🦞 Boston Move: Build the Plan</h3>
+        <ul>
+          <li>Thu 2pm: reach out to contacts — ask about temp housing, subletting, couch options</li>
+          <li>Thu 3pm: update savings tracker weekly; set a Spring 2027 move fund target</li>
+          <li>Research Boston neighborhoods, T access, and cost benchmarks</li>
+          <li>If your new job is remote, flag Boston-area employers too for networking</li>
+          <li>Start a short list of people to ask about temporary housing situations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-content" id="phase-2">
+    <div class="phase-intro">
+      <div class="phase-intro-text">
+        <h2>Sustain</h2>
+        <p>Job deadline has passed — pivot based on where you land. If still searching, keep the rhythm but ease up intensity. If hired, this phase is onboarding + transition. Snail mail club is in August expansion mode. Self care and creative time take a bigger share. Finish summer strong and intentionally.</p>
+      </div>
+      <div class="phase-stats">
+        <div class="stat"><div class="stat-num">5</div><div class="stat-label">weeks left</div></div>
+        <div class="stat"><div class="stat-num">Aug</div><div class="stat-label">Snail expansion</div></div>
+        <div class="stat"><div class="stat-num">Sep 7</div><div class="stat-label">Summer ends</div></div>
+      </div>
+    </div>
+
+    <div class="week-grid">
+      <div class="day-header" style="background:transparent;border-right:1px solid var(--ink)"></div>
+      <div class="day-header light-day">Mon<br><span style="font-size:9px;opacity:0.6">lighter</span></div>
+      <div class="day-header">Tue</div>
+      <div class="day-header">Wed</div>
+      <div class="day-header">Thu</div>
+      <div class="day-header">Fri</div>
+      <div class="day-header off-day">Sat<br><span style="font-size:9px">rest</span></div>
+      <div class="day-header">Sun</div>
+
+      <div class="time-label">9 AM</div>
+      <div class="cell"><div class="block selfcare">Morning routine</div></div>
+      <div class="cell"><div class="block job">Job / onboarding</div></div>
+      <div class="cell"><div class="block job">Job / onboarding</div></div>
+      <div class="cell"><div class="block job">Job / onboarding</div></div>
+      <div class="cell"><div class="block job">Job / onboarding</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Slow morning</div></div>
+
+      <div class="time-label">10 AM</div>
+      <div class="cell"><div class="block selfcare">Errands / planning</div></div>
+      <div class="cell"><div class="block snail">Snail mail: August letters</div></div>
+      <div class="cell"><div class="block web">Website volunteer</div></div>
+      <div class="cell"><div class="block snail">Snail mail writing</div></div>
+      <div class="cell"><div class="block marketing">Snail mail marketing</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block meal">Meal prep</div></div>
+
+      <div class="time-label">11 AM</div>
+      <div class="cell"><div class="block selfcare">Crafts / cello</div></div>
+      <div class="cell"><div class="block web">Website volunteer</div></div>
+      <div class="cell"><div class="block web">Website volunteer</div></div>
+      <div class="cell"><div class="block marketing">Marketing content</div></div>
+      <div class="cell"><div class="block selfcare">Cello / creative</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block meal">Meal prep</div></div>
+
+      <div class="time-label">12 PM</div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell"><div class="block selfcare">Lunch break</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Rest</div></div>
+
+      <div class="time-label">1 PM</div>
+      <div class="cell"><div class="block selfcare">Free / hobby</div></div>
+      <div class="cell"><div class="block selfcare">Self-care planning</div></div>
+      <div class="cell"><div class="block snail">Address + mail letters</div></div>
+      <div class="cell"><div class="block boston">Boston: logistics deep dive</div></div>
+      <div class="cell"><div class="block selfcare">Week wind-down</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block selfcare">Crafts / cello</div></div>
+
+      <div class="time-label">2 PM</div>
+      <div class="cell"><div class="block boston">Boston: savings check-in</div></div>
+      <div class="cell"><div class="block selfcare">Free</div></div>
+      <div class="cell"><div class="block selfcare">Free</div></div>
+      <div class="cell"><div class="block boston">Boston: housing follow-ups</div></div>
+      <div class="cell"><div class="block selfcare">Free</div></div>
+      <div class="cell off"></div>
+      <div class="cell"><div class="block boston">Boston: plan review</div></div>
+    </div>
+
+    <div class="notes-section">
+      <div class="note-card">
+        <h3>🌅 Phase 3 Shift</h3>
+        <ul>
+          <li>If hired: job blocks become onboarding / new role prep</li>
+          <li>If still searching: maintain Tue–Thu app rhythm, reduce pressure</li>
+          <li>More afternoons fully free — protect this intentionally</li>
+          <li>Use September to reflect and reset for fall</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h3>📬 August Snail Mail Expansion</h3>
+        <ul>
+          <li>New readers onboard in August — scale letter writing accordingly</li>
+          <li>Tue + Thu morning become your dedicated letter-writing blocks</li>
+          <li>Consider a themed monthly letter to build community</li>
+          <li>Wednesday: address, stamp, and mail</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h3>🦞 Boston Move: Get Concrete</h3>
+        <ul>
+          <li>Mon 2pm: weekly savings check-in — are you on track for Spring?</li>
+          <li>Thu 1–2pm: logistics deep dive — moving costs, storage, timeline</li>
+          <li>Thu 2pm: follow up on any temp housing leads from Phase 2 outreach</li>
+          <li>Sun 2pm: monthly Boston plan review — adjust savings target if needed</li>
+          <li>By Sep 7: have at least 1–2 concrete housing leads and a move fund goal set</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Jun 1 – Sep 7, 2026 &nbsp;·&nbsp; Mid-morning start &nbsp;·&nbsp; Sat rest day &nbsp;·&nbsp; Mon lighter &nbsp;·&nbsp; 3h/wk website volunteering &nbsp;·&nbsp; 🦞 Boston Spring 2027
+</footer>
+
+<script>
+  function showPhase(n) {
+    document.querySelectorAll('.phase').forEach((p, i) => p.classList.toggle('active', i === n));
+    document.querySelectorAll('.phase-content').forEach((c, i) => c.classList.toggle('active', i === n));
+  }
+</script>
+
+</body>
+</html>
