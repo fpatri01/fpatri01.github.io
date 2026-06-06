@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6-Day Fat Burn Routine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0c0c0c;
+      --surface: #141414;
+      --surface2: #1c1c1c;
+      --border: #272727;
+      --text: #ede9e0;
+      --muted: #888;
+      --faint: #444;
+      --accent: #FF6B35;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lora', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.35;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      padding: 48px 24px 36px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 55%);
+      transition: background 0.5s ease;
+    }
+    .site-header .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      transition: color 0.5s;
+    }
+    .site-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 7vw, 56px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.1;
+    }
+    .site-header h1 span {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--accent);
+      transition: color 0.5s;
+    }
+
+    /* ── DAY SELECTOR ── */
+    .day-nav {
+      display: flex;
+      gap: 8px;
+      padding: 20px 24px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border);
+      scrollbar-width: none;
+    }
+    .day-nav::-webkit-scrollbar { display: none; }
+
+    .day-btn {
+      flex-shrink: 0;
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 18px;
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      line-height: 1;
+    }
+    .day-btn .day-icon { font-size: 20px; }
+    .day-btn:hover { color: var(--text); border-color: var(--faint); }
+    .day-btn.active {
+      color: #fff;
+      font-weight: 500;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .content {
+      padding: 28px 24px 48px;
+      max-width: 720px;
+    }
+
+    /* Day title row */
+    .day-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.35s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .day-title-group { display: flex; flex-direction: column; gap: 6px; }
+    .day-label-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .day-emoji { font-size: 26px; }
+    .day-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      transition: color 0.5s;
+    }
+    .day-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 5vw, 30px);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .duration-badge {
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      border-radius: 10px;
+      padding: 10px 18px;
+      text-align: center;
+      flex-shrink: 0;
+      transition: background 0.5s, border-color 0.5s;
+    }
+    .duration-badge .dur-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .duration-badge .dur-value {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--accent);
+      transition: color 0.5s;
+    }
+
+    /* Blocks */
+    .block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      animation: fadeUp 0.35s ease both;
+    }
+    .block.main-block {
+      border-left-color: var(--accent);
+      transition: border-left-color 0.5s;
+    }
+    .block-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .main-block .block-title { color: var(--accent); transition: color 0.5s; }
+    .block ul {
+      padding-left: 18px;
+      list-style: disc;
+    }
+    .block ul li {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #d0ccc4;
+      margin-bottom: 6px;
+    }
+    .block ul li:last-child { margin-bottom: 0; }
+
+    /* Tip */
+    .tip-box {
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 36px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      animation: fadeUp 0.35s ease 0.1s both;
+      transition: background 0.5s, border-color 0.5s;
+    }
+    .tip-box .tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+    .tip-box p {
+      font-size: 14px;
+      font-style: italic;
+      line-height: 1.7;
+      color: #bfbbb3;
+    }
+
+    /* ── WEEKLY OVERVIEW ── */
+    .weekly-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      animation: fadeUp 0.35s ease 0.15s both;
+    }
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .stat-cell {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+    .stat-cell .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    .stat-cell .stat-value { font-size: 15px; color: var(--text); font-weight: 600; }
+
+    .prog-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .prog-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+    .prog-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .prog-text { font-size: 14px; color: #c0bbb4; line-height: 1.6; }
+
+    /* day strip at bottom */
+    .day-strip {
+      display: flex;
+      gap: 6px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .strip-item {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: var(--surface2);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .strip-item.rest { color: #555; }
+
+    .footer-note {
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: #3a3a3a;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <p class="eyebrow" id="headerEyebrow">6-Day Fat Burn Plan · 25–30 min/day</p>
+  <h1>Your Weekly<br /><span id="headerAccent">Workout</span> Routine</h1>
+</header>
+
+<nav class="day-nav" id="dayNav"></nav>
+
+<main class="content" id="mainContent"></main>
+
+<script>
+  const days = [
+    {
+      day: "Monday", label: "Burn", theme: "#FF6B35", icon: "🔥",
+      focus: "Cardio Blast", duration: "25 min",
+      warmup: { title: "Wake Up (5 min)", items: ["Somatic bed stretches — full body scan, slow spinal rolls, hip circles (5 min)"] },
+      main:   { title: "Main Work (17 min)", items: ["Jump rope — 45 sec on / 15 sec rest × 6 rounds (12 min)", "Dance freely to 2 upbeat songs (5 min)"] },
+      cooldown: { title: "Cool Down (3 min)", items: ["Walk slowly around your space, shake out legs"] },
+      tip: "Jump rope is one of the highest calorie-burn tools you have — treat it like your secret weapon."
+    },
+    {
+      day: "Tuesday", label: "Sculpt", theme: "#7B61FF", icon: "💪",
+      focus: "Band Strength — Upper Body", duration: "25 min",
+      warmup: { title: "Wake Up (5 min)", items: ["Somatic bed stretches — shoulder rolls, cat-cow, chest opener (5 min)"] },
+      main:   { title: "Main Work (17 min)", items: ["Light band: Bicep curls — 3×15", "Medium band: Lateral raises — 3×12", "Heavy band: Seated rows — 3×10", "Light band: Overhead tricep extension — 3×12", "Rest 30 sec between sets"] },
+      cooldown: { title: "Cool Down (3 min)", items: ["Slow walk, arm crossovers, doorway chest stretch"] },
+      tip: "Anchor your heavy band to a door or sturdy furniture for rows. Control the release — that's where the work happens."
+    },
+    {
+      day: "Wednesday", label: "Flow", theme: "#00B4A6", icon: "🚴",
+      focus: "Bike Ride + Recovery", duration: "25–30 min",
+      warmup: { title: "Wake Up (5 min)", items: ["Somatic bed stretches — leg swings, ankle circles, hip flexor release (5 min)"] },
+      main:   { title: "Main Work (20 min)", items: ["Bike ride at moderate pace — aim for light sweat (20 min)", "Optional: push pace on a flat stretch for 60 sec intervals × 3"] },
+      cooldown: { title: "Cool Down (5 min)", items: ["Slow pedal or walk, quad and calf stretches"] },
+      tip: "Wednesday is your aerobic recovery day — keep your heart rate moderate, not maxed. Let the legs move."
+    },
+    {
+      day: "Thursday", label: "Power", theme: "#E63946", icon: "⚡",
+      focus: "Band Strength — Lower Body", duration: "25 min",
+      warmup: { title: "Wake Up (5 min)", items: ["Somatic bed stretches — glute bridges in bed, supine twists, knee hugs (5 min)"] },
+      main:   { title: "Main Work (17 min)", items: ["Medium band: Squats — 3×15", "Heavy band: Deadlift hinge — 3×12", "Light band: Lateral leg walks — 3×12 each direction", "Medium band: Glute bridges with band above knees — 3×15", "Rest 30 sec between sets"] },
+      cooldown: { title: "Cool Down (3 min)", items: ["Walk around, figure-four stretch, hamstring fold"] },
+      tip: "Place the band just above your knees for glute bridges — the abductor activation is elite."
+    },
+    {
+      day: "Friday", label: "Pulse", theme: "#F4A261", icon: "🎵",
+      focus: "Dance + Jump Rope Circuit", duration: "25 min",
+      warmup: { title: "Wake Up (5 min)", items: ["Somatic bed stretches — neck rolls, side body, gentle backbend (5 min)"] },
+      main:   { title: "Main Work (17 min)", items: ["Dance to 1 song (3–4 min)", "Jump rope — 30 sec on / 30 sec rest × 4 rounds", "Dance to 1 song (3–4 min)", "Jump rope — 45 sec on / 15 sec rest × 3 rounds"] },
+      cooldown: { title: "Cool Down (3 min)", items: ["Slow sway dancing, body shake-out, deep breathing"] },
+      tip: "Friday is a feel-good burn day. Pick songs that make you want to move — the energy does the work."
+    },
+    {
+      day: "Saturday", label: "Endure", theme: "#2D9E6B", icon: "🌿",
+      focus: "Long Walk + Full Body Bands", duration: "30 min",
+      warmup: { title: "Wake Up (5 min)", items: ["Somatic bed stretches — full sequence, take your time (5 min)"] },
+      main:   { title: "Main Work (22 min)", items: ["Brisk walk — 15 min (push the pace, use arms)", "Light band: Standing overhead press — 2×15", "Medium band: Bent-over rows — 2×12", "Heavy band: Squat to press — 2×10"] },
+      cooldown: { title: "Cool Down (3 min)", items: ["Slow walk home or around block, full body stretch"] },
+      tip: "Saturday's walk sets the tone. Walk like you mean it — arms pumping, chest open, pace with purpose."
+    }
+  ];
+
+  const progression = [
+    "Week 1–2: Follow as written, focus on consistency",
+    "Week 3–4: Add 1 more jump rope round per session",
+    "Month 2: Upgrade one band weight per exercise",
+    "Month 2+: Extend bike rides by 5 min"
+  ];
+
+  let activeDay = 0;
+
+  function hex(color, alpha) {
+    return `color-mix(in srgb, ${color} ${Math.round(alpha * 100)}%, transparent)`;
+  }
+
+  function buildNav() {
+    const nav = document.getElementById('dayNav');
+    nav.innerHTML = '';
+    days.forEach((d, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'day-btn' + (i === activeDay ? ' active' : '');
+      btn.innerHTML = `<span class="day-icon">${d.icon}</span><span>${d.day.slice(0,3)}</span>`;
+      btn.style.setProperty('--btn-accent', d.theme);
+      if (i === activeDay) {
+        btn.style.background = d.theme;
+        btn.style.borderColor = d.theme;
+        btn.style.color = '#fff';
+      }
+      btn.addEventListener('click', () => { activeDay = i; render(); });
+      nav.appendChild(btn);
+    });
+  }
+
+  function buildBlock(block, cls) {
+    return `
+      <div class="block ${cls}">
+        <div class="block-title">${block.title}</div>
+        <ul>${block.items.map(i => `<li>${i}</li>`).join('')}</ul>
+      </div>`;
+  }
+
+  function render() {
+    const d = days[activeDay];
+
+    // Update CSS accent var
+    document.documentElement.style.setProperty('--accent', d.theme);
+
+    // Header gradient
+    document.getElementById('siteHeader').style.background =
+      `linear-gradient(160deg, ${d.theme}1e 0%, transparent 55%)`;
+
+    buildNav();
+
+    document.getElementById('mainContent').innerHTML = `
+      <div class="day-header">
+        <div class="day-title-group">
+          <div class="day-label-row">
+            <span class="day-emoji">${d.icon}</span>
+            <span class="day-label">${d.label}</span>
+          </div>
+          <div class="day-title">${d.day} — ${d.focus}</div>
+        </div>
+        <div class="duration-badge">
+          <div class="dur-label">Duration</div>
+          <div class="dur-value">${d.duration}</div>
+        </div>
+      </div>
+
+      ${buildBlock(d.warmup, '')}
+      ${buildBlock(d.main, 'main-block')}
+      ${buildBlock(d.cooldown, '')}
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <p>${d.tip}</p>
+      </div>
+
+      <div class="weekly-card">
+        <div class="section-label">Weekly Overview</div>
+        <div class="stats-grid">
+          <div class="stat-cell">
+            <div class="stat-label">Est. Weekly Burn</div>
+            <div class="stat-value">1,400–2,000+ kcal</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-label">Rest Day</div>
+            <div class="stat-value">Sunday</div>
+          </div>
+        </div>
+
+        <div class="prog-label">Progression Plan</div>
+        ${progression.map((p, i) => `
+          <div class="prog-item">
+            <div class="prog-num">${i + 1}</div>
+            <div class="prog-text">${p}</div>
+          </div>`).join('')}
+
+        <div class="day-strip">
+          ${days.map(d2 => `
+            <div class="strip-item" style="color:${d2.theme}88">
+              ${d2.icon} <span>${d2.day.slice(0,3)}</span>
+            </div>`).join('')}
+          <div class="strip-item rest">😴 <span>Sun · Rest</span></div>
+        </div>
+      </div>
+
+      <p class="footer-note">Sunday · Full rest or somatic stretching only</p>
+    `;
+  }
+
+  render();
+</script>
+</body>
+</html>
