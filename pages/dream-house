@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savannah House Model</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink:     #1A1714;
+  --bg:      #F5F0E8;
+  --paper:   #FDFAF4;
+  --muted:   #7A7168;
+  --rule:    #DDD8CE;
+  --amber:   #C4763A;
+  --green:   #3A7A5C;
+  --red:     #A03030;
+  --blue:    #3A5C8A;
+  --radius:  4px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 28px 18px 60px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 16px;
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+header h1 em { font-style: italic; color: var(--amber); }
+
+.header-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+.sec-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 5px;
+  margin-bottom: 14px;
+}
+
+section { margin-bottom: 36px; }
+
+/* SCENARIO TABS */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--muted);
+  transition: all 0.15s;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.03em;
+}
+
+.tab.active {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+/* SCENARIO PANEL */
+.scenario { display: none; }
+.scenario.active { display: block; }
+
+/* ASSUMPTION PILLS */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+.pill {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 3px 11px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.pill strong { color: var(--ink); font-weight: 600; }
+
+/* MAIN GRID */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 560px) { .main-grid { grid-template-columns: 1fr; } }
+
+/* CARDS */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.card-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.flow-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 3px 0;
+  border-bottom: 1px solid #EDEAE3;
+  font-size: 12px;
+}
+
+.flow-row:last-of-type { border-bottom: none; }
+.flow-row .lbl { color: var(--muted); font-size: 11px; }
+.flow-row .amt {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.divrow {
+  border-top: 1px solid var(--ink);
+  margin-top: 7px;
+  padding-top: 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.divrow .lbl { font-weight: 600; font-size: 13px; }
+.divrow .amt {
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.green  { color: var(--green); }
+.red    { color: var(--red); }
+.amber  { color: var(--amber); }
+.blue   { color: var(--blue); }
+.muted  { color: var(--muted); }
+
+/* BIG NUMBER */
+.big-card {
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.big-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 4px;
+}
+
+.big-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  line-height: 1;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.big-number.positive { color: #7FD4A8; }
+.big-number.negative { color: #E87878; }
+.big-number.neutral  { color: #F5C87A; }
+
+.big-sub {
+  font-size: 11px;
+  opacity: 0.6;
+  line-height: 1.4;
+}
+
+/* YEAR TABS for Airbnb scenarios */
+.mode-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.mode-btn {
+  padding: 5px 13px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  transition: all 0.15s;
+}
+
+.mode-btn.active {
+  background: var(--amber);
+  color: white;
+  border-color: var(--amber);
+}
+
+.mode-panel { display: none; }
+.mode-panel.active { display: block; }
+
+/* EQUITY TIMELINE */
+.equity-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.equity-table th {
+  background: var(--ink);
+  color: var(--bg);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.equity-table th:first-child { text-align: left; }
+
+.equity-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--rule);
+  text-align: right;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  vertical-align: middle;
+}
+
+.equity-table td:first-child {
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.equity-table tr:last-child td { border-bottom: none; }
+
+.equity-table tr.highlight td {
+  background: #F0EBE0;
+  font-weight: 600;
+}
+
+.bar-cell { width: 100px; }
+
+.mini-bar {
+  height: 6px;
+  background: var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+  display: inline-block;
+  width: 80px;
+  vertical-align: middle;
+}
+
+.mini-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--amber);
+}
+
+/* CAUTION */
+.note {
+  background: #FEF8F1;
+  border-left: 3px solid var(--amber);
+  padding: 12px 14px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.note strong { color: var(--ink); }
+.note p + p { margin-top: 6px; }
+
+/* VERDICT */
+.verdict {
+  background: var(--green);
+  color: white;
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-top: 14px;
+}
+
+.verdict-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.verdict p { font-size: 12px; opacity: 0.9; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Savannah<br><em>House Model</em></h1>
+  <div class="header-meta">
+    Purchase at age 40 · ~2036<br>
+    Rate: 6.5% (current) or 5.5% (optimistic)<br>
+    Airbnb income: conservative to strong
+  </div>
+</header>
+
+<!-- SCENARIO SELECTOR -->
+<section>
+  <div class="sec-label">Choose Your Scenario</div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('base')">Base Case · 6.5% rate</div>
+    <div class="tab" onclick="switchTab('opt')">Optimistic · 5.5% rate</div>
+    <div class="tab" onclick="switchTab('heavy')">Airbnb-Heavy · Pay it down fast</div>
+  </div>
+
+  <!-- BASE CASE -->
+  <div class="scenario active" id="tab-base">
+    <div class="pills">
+      <div class="pill">Home price <strong>~$450K</strong> (2036 est.)</div>
+      <div class="pill">Down payment <strong>$90K (20%)</strong></div>
+      <div class="pill">Loan <strong>$360K @ 6.5%</strong></div>
+      <div class="pill">Airbnb <strong>moderate</strong> — 40% of year</div>
+    </div>
+    <div class="main-grid">
+      <div class="card">
+        <div class="card-title">Monthly Costs (You Pay)</div>
+        <div class="flow-row"><span class="lbl">Mortgage P&I</span><span class="amt red">−$2,275</span></div>
+        <div class="flow-row"><span class="lbl">Property tax (~1.1%)</span><span class="amt red">−$413</span></div>
+        <div class="flow-row"><span class="lbl">Insurance (HOI)</span><span class="amt red">−$150</span></div>
+        <div class="flow-row"><span class="lbl">Maintenance (~0.5%/yr)</span><span class="amt red">−$188</span></div>
+        <div class="flow-row"><span class="lbl">Utilities</span><span class="amt red">−$180</span></div>
+        <div class="divrow">
+          <span class="lbl">Total monthly cost</span>
+          <span class="amt red">$3,206</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Airbnb Income (Moderate — 14 nights/mo)</div>
+        <div class="flow-row"><span class="lbl">Gross @ $220/night avg</span><span class="amt green">+$3,080</span></div>
+        <div class="flow-row"><span class="lbl">Airbnb platform fee (3%)</span><span class="amt red">−$92</span></div>
+        <div class="flow-row"><span class="lbl">Savannah hotel/motel tax (6%)</span><span class="amt red">−$185</span></div>
+        <div class="flow-row"><span class="lbl">State sales tax (4%)</span><span class="amt red">−$123</span></div>
+        <div class="flow-row"><span class="lbl">Cleaning / supplies</span><span class="amt red">−$200</span></div>
+        <div class="divrow">
+          <span class="lbl">Net Airbnb income</span>
+          <span class="amt green">$2,480</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-grid">
+      <div class="big-card">
+        <div class="big-label">Your net monthly housing cost</div>
+        <div class="big-number neutral">$726</div>
+        <div class="big-sub">$3,206 costs − $2,480 Airbnb income<br>Airbnb covers 77% of your total housing expense</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Vs. Renting the Same Space</div>
+        <div class="flow-row"><span class="lbl">Avg Savannah 2BR rent (2036 est.)</span><span class="amt red">~$2,100/mo</span></div>
+        <div class="flow-row"><span class="lbl">Your net ownership cost</span><span class="amt green">$726/mo</span></div>
+        <div class="flow-row"><span class="lbl">Monthly savings vs. rent</span><span class="amt green">~$1,374</span></div>
+        <div class="flow-row"><span class="lbl">+ Equity built per month</span><span class="amt green">~$640</span></div>
+        <div class="divrow">
+          <span class="lbl">Total effective gain vs. renting</span>
+          <span class="amt green">~$2,014/mo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTIMISTIC -->
+  <div class="scenario" id="tab-opt">
+    <div class="pills">
+      <div class="pill">Home price <strong>~$450K</strong></div>
+      <div class="pill">Down payment <strong>$90K (20%)</strong></div>
+      <div class="pill">Loan <strong>$360K @ 5.5%</strong></div>
+      <div class="pill">Airbnb <strong>moderate</strong> — 40% of year</div>
+    </div>
+    <div class="main-grid">
+      <div class="card">
+        <div class="card-title">Monthly Costs (You Pay)</div>
+        <div class="flow-row"><span class="lbl">Mortgage P&I @ 5.5%</span><span class="amt red">−$2,044</span></div>
+        <div class="flow-row"><span class="lbl">Property tax (~1.1%)</span><span class="amt red">−$413</span></div>
+        <div class="flow-row"><span class="lbl">Insurance (HOI)</span><span class="amt red">−$150</span></div>
+        <div class="flow-row"><span class="lbl">Maintenance (~0.5%/yr)</span><span class="amt red">−$188</span></div>
+        <div class="flow-row"><span class="lbl">Utilities</span><span class="amt red">−$180</span></div>
+        <div class="divrow">
+          <span class="lbl">Total monthly cost</span>
+          <span class="amt red">$2,975</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Airbnb Income (Moderate — 14 nights/mo)</div>
+        <div class="flow-row"><span class="lbl">Gross @ $220/night avg</span><span class="amt green">+$3,080</span></div>
+        <div class="flow-row"><span class="lbl">Airbnb platform fee (3%)</span><span class="amt red">−$92</span></div>
+        <div class="flow-row"><span class="lbl">Savannah hotel/motel tax (6%)</span><span class="amt red">−$185</span></div>
+        <div class="flow-row"><span class="lbl">State sales tax (4%)</span><span class="amt red">−$123</span></div>
+        <div class="flow-row"><span class="lbl">Cleaning / supplies</span><span class="amt red">−$200</span></div>
+        <div class="divrow">
+          <span class="lbl">Net Airbnb income</span>
+          <span class="amt green">$2,480</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-grid">
+      <div class="big-card">
+        <div class="big-label">Your net monthly housing cost</div>
+        <div class="big-number positive">$495</div>
+        <div class="big-sub">$2,975 costs − $2,480 Airbnb income<br>Airbnb covers 83% of your total housing expense</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Vs. Renting the Same Space</div>
+        <div class="flow-row"><span class="lbl">Avg Savannah 2BR rent (2036 est.)</span><span class="amt red">~$2,100/mo</span></div>
+        <div class="flow-row"><span class="lbl">Your net ownership cost</span><span class="amt green">$495/mo</span></div>
+        <div class="flow-row"><span class="lbl">Monthly savings vs. rent</span><span class="amt green">~$1,605</span></div>
+        <div class="flow-row"><span class="lbl">+ Equity built per month</span><span class="amt green">~$730</span></div>
+        <div class="divrow">
+          <span class="lbl">Total effective gain vs. renting</span>
+          <span class="amt green">~$2,335/mo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AIRBNB HEAVY -->
+  <div class="scenario" id="tab-heavy">
+    <div class="pills">
+      <div class="pill">Home price <strong>~$450K</strong></div>
+      <div class="pill">Down payment <strong>$90K (20%)</strong></div>
+      <div class="pill">Loan <strong>$360K @ 6.5%</strong></div>
+      <div class="pill">Airbnb <strong>aggressive</strong> — 22 nights/mo</div>
+      <div class="pill">You stay with family / travel those nights</div>
+    </div>
+    <div class="main-grid">
+      <div class="card">
+        <div class="card-title">Monthly Costs (You Pay)</div>
+        <div class="flow-row"><span class="lbl">Mortgage P&I</span><span class="amt red">−$2,275</span></div>
+        <div class="flow-row"><span class="lbl">Property tax (~1.1%)</span><span class="amt red">−$413</span></div>
+        <div class="flow-row"><span class="lbl">Insurance (HOI)</span><span class="amt red">−$150</span></div>
+        <div class="flow-row"><span class="lbl">Maintenance</span><span class="amt red">−$188</span></div>
+        <div class="flow-row"><span class="lbl">Utilities</span><span class="amt red">−$180</span></div>
+        <div class="divrow">
+          <span class="lbl">Total monthly cost</span>
+          <span class="amt red">$3,206</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Airbnb Income (Aggressive — 22 nights/mo)</div>
+        <div class="flow-row"><span class="lbl">Gross @ $232/night (peak pricing)</span><span class="amt green">+$5,104</span></div>
+        <div class="flow-row"><span class="lbl">Airbnb platform fee (3%)</span><span class="amt red">−$153</span></div>
+        <div class="flow-row"><span class="lbl">Savannah hotel/motel tax (6%)</span><span class="amt red">−$306</span></div>
+        <div class="flow-row"><span class="lbl">State sales tax (4%)</span><span class="amt red">−$204</span></div>
+        <div class="flow-row"><span class="lbl">Cleaning / supplies (more nights)</span><span class="amt red">−$350</span></div>
+        <div class="divrow">
+          <span class="lbl">Net Airbnb income</span>
+          <span class="amt green">$4,091</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-grid">
+      <div class="big-card">
+        <div class="big-label">Monthly net — Airbnb profit after costs</div>
+        <div class="big-number positive">+$885</div>
+        <div class="big-sub">House pays YOU $885/mo<br>You live essentially free + build equity</div>
+      </div>
+      <div class="card">
+        <div class="card-title">What to Do With the Surplus</div>
+        <div class="flow-row"><span class="lbl">Extra principal payments</span><span class="amt green">+$500/mo</span></div>
+        <div class="flow-row"><span class="lbl">Roth IRA top-up</span><span class="amt green">+$200/mo</span></div>
+        <div class="flow-row"><span class="lbl">Spain / Mexico fund</span><span class="amt green">+$185/mo</span></div>
+        <div class="flow-row"><span class="lbl">Payoff acceleration</span><span class="amt blue">~5 yrs faster</span></div>
+        <div class="divrow">
+          <span class="lbl">Mortgage free by</span>
+          <span class="amt blue">~age 55</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUITY TIMELINE -->
+<section>
+  <div class="sec-label">Equity Built Over Time · Base Case ($360K loan @ 6.5%)</div>
+  <table class="equity-table">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Your Age</th>
+        <th>Loan Balance</th>
+        <th>Est. Home Value</th>
+        <th>Equity</th>
+        <th class="bar-cell">Progress</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Buy · 2036</td>
+        <td>40</td>
+        <td>$360,000</td>
+        <td>$450,000</td>
+        <td class="green">$90,000</td>
+        <td><div class="mini-bar"><div class="mini-fill" style="width:20%"></div></div></td>
+      </tr>
+      <tr>
+        <td>Year 5 · 2041</td>
+        <td>45</td>
+        <td>$336,000</td>
+        <td>$524,000</td>
+        <td class="green">$188,000</td>
+        <td><div class="mini-bar"><div class="mini-fill" style="width:36%"></div></div></td>
+      </tr>
+      <tr>
+        <td>Year 10 · 2046</td>
+        <td>50</td>
+        <td>$305,000</td>
+        <td>$610,000</td>
+        <td class="green">$305,000</td>
+        <td><div class="mini-bar"><div class="mini-fill" style="width:50%"></div></div></td>
+      </tr>
+      <tr class="highlight">
+        <td>Year 15 · 2051</td>
+        <td>55</td>
+        <td>$265,000</td>
+        <td>$710,000</td>
+        <td class="green">$445,000</td>
+        <td><div class="mini-bar"><div class="mini-fill" style="width:63%"></div></div></td>
+      </tr>
+      <tr>
+        <td>Year 20 · 2056</td>
+        <td>60</td>
+        <td>$210,000</td>
+        <td>$827,000</td>
+        <td class="green">$617,000</td>
+        <td><div class="mini-bar"><div class="mini-fill" style="width:75%"></div></div></td>
+      </tr>
+      <tr>
+        <td>Year 30 · 2066</td>
+        <td>70</td>
+        <td>$0</td>
+        <td>$1.1M est.</td>
+        <td class="green">$1.1M+</td>
+        <td><div class="mini-bar"><div class="mini-fill" style="width:100%"></div></div></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <p><strong>Home value appreciation:</strong> Assumes ~3% annual appreciation — conservative for Savannah, which has run higher historically. At 5% appreciation the numbers above are significantly better.</p>
+    <p><strong>Sell at 55 to move abroad?</strong> At that point you'd have ~$445K in equity on the base case. Sell, pay off the balance, and you have a substantial lump sum to buy in Spain or Mexico outright — or keep it as a rental producing passive income while you live abroad cheaply.</p>
+  </div>
+</section>
+
+<!-- THE SELL AND MOVE SCENARIO -->
+<section>
+  <div class="sec-label">The "Sell at 55 & Move Abroad" Math</div>
+  <div class="main-grid">
+    <div class="card">
+      <div class="card-title">If You Sell at Age 55 (2051)</div>
+      <div class="flow-row"><span class="lbl">Estimated sale price</span><span class="amt">$710,000</span></div>
+      <div class="flow-row"><span class="lbl">Remaining mortgage</span><span class="amt red">−$265,000</span></div>
+      <div class="flow-row"><span class="lbl">Selling costs (~6%)</span><span class="amt red">−$43,000</span></div>
+      <div class="divrow">
+        <span class="lbl">Cash in hand</span>
+        <span class="amt green">~$402,000</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">What $402K Buys Abroad</div>
+      <div class="flow-row"><span class="lbl">Buy outright in Mérida, MX</span><span class="amt green">✓ Done</span></div>
+      <div class="flow-row"><span class="lbl">Buy outright in Tampico, MX</span><span class="amt green">✓ Done</span></div>
+      <div class="flow-row"><span class="lbl">Strong down payment in Marbella</span><span class="amt green">✓ ~50% down</span></div>
+      <div class="flow-row"><span class="lbl">Remainder invested @ 4% SWR</span><span class="amt blue">~$800–1,200/mo</span></div>
+      <div class="divrow">
+        <span class="lbl">+ Social Security income</span>
+        <span class="amt blue">+$1,200+/mo</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <div class="verdict-title">The picture at 55, if you stay the course</div>
+    <p>Sell the Savannah house. Walk away with ~$400K cash. Buy a home in Mexico outright or put a huge down payment in Spain. Invest the remainder. Combined with Social Security, you'd have $2,000–2,500/month in passive income in a country where that goes very, very far — and you'd own your home free and clear. That is retirement. That is the plan working.</p>
+  </div>
+</section>
+
+<!-- KEY RISKS -->
+<section>
+  <div class="sec-label">Risks Worth Knowing</div>
+  <div class="main-grid">
+    <div class="card">
+      <div class="card-title">Savannah STR Regulation Risk</div>
+      <div style="font-size:12px; color:var(--muted); line-height:1.6;">
+        Savannah limits Airbnb to designated overlay districts with per-ward caps. If rules tighten — which is common in tourist cities — your Airbnb income could shrink or disappear. The mortgage still gets paid either way. <strong style="color:var(--ink)">Buy in the overlay district intentionally, and have a plan B: long-term rental at ~$1,800/mo covers most of the mortgage.</strong>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">The Rate Gamble</div>
+      <div style="font-size:12px; color:var(--muted); line-height:1.6;">
+        If you buy in 2036 and rates are still 6.5%+, your mortgage payment is higher but the math still works with Airbnb income. If rates drop to 5% or below — refinance immediately. Every 1% drop on $360K saves you ~$215/month for the life of the loan.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Climate & Insurance</div>
+      <div style="font-size:12px; color:var(--muted); line-height:1.6;">
+        Savannah has real flood and hurricane exposure. Flood insurance is separate from HOI and could run $800–2,000+/yr depending on flood zone. <strong style="color:var(--ink)">Factor this into your offer price and property selection.</strong> This is non-negotiable before buying.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Down Payment Gap</div>
+      <div style="font-size:12px; color:var(--muted); line-height:1.6;">
+        Your financial plan targets ~$80K for a house fund by 40. A $450K Savannah home needs $90K (20%) to avoid PMI, or $45K (10%) with PMI. <strong style="color:var(--ink)">The $10K gap is closeable — about $83/mo extra over 10 years — or you go in at 10% down and eliminate PMI once you hit 20% equity.</strong>
+      </div>
+    </div>
+  </div>
+  <div class="note">
+    <p><strong>Georgia Dream Program:</strong> Georgia offers down payment assistance programs for qualifying buyers. <strong>As of June 2026, the Georgia Dream rate is 5.75%</strong> — meaningfully better than market rate. Worth investigating closer to your purchase date.</p>
+  </div>
+</section>
+
+<div style="border-top:1px solid var(--rule); padding-top:16px; margin-top:4px;">
+  <p style="font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; letter-spacing:0.02em;">
+    All projections are estimates. Mortgage calculations use standard amortization. Home value appreciation at 3%/yr. Airbnb income based on 2026 Savannah market data. Consult a licensed real estate agent, mortgage broker, and CPA before purchasing. STR regulations are subject to change.
+  </p>
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.scenario').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
