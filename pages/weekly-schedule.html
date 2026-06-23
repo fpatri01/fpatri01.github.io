@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Schedule</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F5F0E8;
+    --ink: #1C1A17;
+    --ink-light: #4A4540;
+    --rosin: #8B5E3C;
+    --maple: #C8923A;
+    --sage: #6B7C5E;
+    --lavender: #8B85B0;
+    --blush: #C47B72;
+    --teal: #5B8C85;
+    --gold: #D4A832;
+    --rule: #D8CFC4;
+    --busy-bg: #EDEAE4;
+    --busy-text: #B0A898;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--parchment);
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 40px 24px 60px;
+  }
+  header {
+    max-width: 980px;
+    margin: 0 auto 32px;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  header p {
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    margin-top: 5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  .legend {
+    max-width: 980px;
+    margin: 0 auto 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    font-weight: 500;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .week {
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+  }
+  .day-col { display: flex; flex-direction: column; gap: 7px; }
+  .day-label {
+    font-size: 0.63rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink);
+    padding-bottom: 5px;
+    border-bottom: 1.5px solid var(--ink);
+    margin-bottom: 2px;
+  }
+  .block {
+    border-radius: 3px;
+    padding: 9px 9px 9px 11px;
+    position: relative;
+    overflow: hidden;
+  }
+  .block::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .block .time {
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    opacity: 0.65;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+  .block .icon { font-size: 0.95rem; display: block; margin-bottom: 3px; }
+  .block .activity { font-size: 0.73rem; font-weight: 500; line-height: 1.3; }
+  .block .note { font-size: 0.62rem; font-style: italic; opacity: 0.7; margin-top: 3px; line-height: 1.3; }
+
+  /* Free activity blocks */
+  .self-care  { background: #F9EFEC; color: var(--blush); }
+  .self-care::before { background: var(--blush); }
+  .music      { background: #EDF2F1; color: var(--teal); }
+  .music::before { background: var(--teal); }
+  .snail-mail { background: #EFF0F8; color: var(--lavender); }
+  .snail-mail::before { background: var(--lavender); }
+  .writing    { background: #F4EFE7; color: var(--rosin); }
+  .writing::before { background: var(--rosin); }
+  .compose    { background: #FBF5E6; color: var(--gold); }
+  .compose::before { background: var(--gold); }
+  .exercise   { background: #EEF1EB; color: var(--sage); }
+  .exercise::before { background: var(--sage); }
+
+  /* Busy block */
+  .busy {
+    background: var(--busy-bg);
+    color: var(--busy-text);
+    border-radius: 3px;
+    padding: 8px 9px 8px 11px;
+    position: relative;
+  }
+  .busy::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: #C8C0B4;
+  }
+  .busy .time {
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .busy .label { font-size: 0.7rem; font-weight: 400; font-style: italic; }
+
+  .open-note {
+    font-size: 0.62rem;
+    color: var(--ink-light);
+    font-style: italic;
+    padding: 7px 9px;
+    background: transparent;
+    border: 1px dashed var(--rule);
+    border-radius: 3px;
+    line-height: 1.4;
+  }
+  @media (max-width: 700px) {
+    .week { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Weekly Practice & Care</h1>
+  <p>Planned around your commitments — music, words, movement, rest</p>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="dot" style="background:var(--blush)"></div> Self-care</div>
+  <div class="legend-item"><div class="dot" style="background:var(--teal)"></div> Music practice</div>
+  <div class="legend-item"><div class="dot" style="background:var(--lavender)"></div> Snail mail</div>
+  <div class="legend-item"><div class="dot" style="background:var(--rosin)"></div> Writing</div>
+  <div class="legend-item"><div class="dot" style="background:var(--gold)"></div> Composition</div>
+  <div class="legend-item"><div class="dot" style="background:var(--sage)"></div> Exercise</div>
+  <div class="legend-item"><div class="dot" style="background:#C8C0B4"></div> Busy / unavailable</div>
+</div>
+
+<div class="week">
+
+  <!-- SUNDAY -->
+  <div class="day-col">
+    <div class="day-label">Sunday</div>
+    <div class="block self-care">
+      <span class="icon">🛁</span>
+      <div class="time">8 – 10am</div>
+      <div class="activity">Self-care morning</div>
+      <div class="note">Slow start — skincare, tea, journaling</div>
+    </div>
+    <div class="busy">
+      <div class="time">10am – 12pm</div>
+      <div class="label">busy</div>
+    </div>
+    <div class="block exercise">
+      <span class="icon">🚶</span>
+      <div class="time">12 – 1pm</div>
+      <div class="activity">Walk or movement</div>
+      <div class="note">Shake off the morning</div>
+    </div>
+    <div class="block writing">
+      <span class="icon">✍️</span>
+      <div class="time">1 – 3pm</div>
+      <div class="activity">Writing</div>
+      <div class="note">Sunday afternoon is great for longer-form</div>
+    </div>
+    <div class="block music">
+      <span class="icon">🎻</span>
+      <div class="time">3 – 5pm</div>
+      <div class="activity">Cello — free play</div>
+      <div class="note">No agenda, just play</div>
+    </div>
+    <div class="open-note">Evening open — protect it</div>
+  </div>
+
+  <!-- MONDAY -->
+  <div class="day-col">
+    <div class="day-label">Monday</div>
+    <div class="block exercise">
+      <span class="icon">🏃</span>
+      <div class="time">9 – 10am</div>
+      <div class="activity">Exercise</div>
+      <div class="note">Before the day fills up</div>
+    </div>
+    <div class="block compose">
+      <span class="icon">🎼</span>
+      <div class="time">10am – 12pm</div>
+      <div class="activity">Composition</div>
+      <div class="note">Monday morning creative energy</div>
+    </div>
+    <div class="block snail-mail">
+      <span class="icon">✉️</span>
+      <div class="time">12 – 2pm</div>
+      <div class="activity">Snail mail club</div>
+      <div class="note">Writing, assembly, addressing</div>
+    </div>
+    <div class="block self-care">
+      <span class="icon">🍳</span>
+      <div class="time">2 – 4pm</div>
+      <div class="activity">Cook + rest</div>
+      <div class="note">Real food before a long evening</div>
+    </div>
+    <div class="busy">
+      <div class="time">4 – 8pm</div>
+      <div class="label">busy</div>
+    </div>
+    <div class="block music">
+      <span class="icon">🎻</span>
+      <div class="time">8 – 9:30pm</div>
+      <div class="activity">Cello practice</div>
+      <div class="note">Evening session to decompress</div>
+    </div>
+    <div class="open-note">9:30pm+ wind down</div>
+  </div>
+
+  <!-- TUESDAY -->
+  <div class="day-col">
+    <div class="day-label">Tuesday</div>
+    <div class="block self-care">
+      <span class="icon">🌅</span>
+      <div class="time">8 – 10am</div>
+      <div class="activity">Morning routine</div>
+      <div class="note">Cook breakfast, prepare for the day</div>
+    </div>
+    <div class="busy">
+      <div class="time">10am – 4pm</div>
+      <div class="label">busy</div>
+    </div>
+    <div class="block exercise">
+      <span class="icon">🧘</span>
+      <div class="time">4 – 5pm</div>
+      <div class="activity">Exercise / stretch</div>
+      <div class="note">Decompress after the long block</div>
+    </div>
+    <div class="block writing">
+      <span class="icon">✍️</span>
+      <div class="time">5 – 7:30pm</div>
+      <div class="activity">Writing</div>
+      <div class="note">Essays, personal work, snail mail letters</div>
+    </div>
+    <div class="busy">
+      <div class="time">8 – 10pm</div>
+      <div class="label">busy</div>
+    </div>
+  </div>
+
+  <!-- WEDNESDAY -->
+  <div class="day-col">
+    <div class="day-label">Wednesday</div>
+    <div class="block self-care">
+      <span class="icon">🧹</span>
+      <div class="time">8 – 10am</div>
+      <div class="activity">Home reset</div>
+      <div class="note">Cleaning routine clears the mental slate</div>
+    </div>
+    <div class="busy">
+      <div class="time">10am – 4pm</div>
+      <div class="label">busy</div>
+    </div>
+    <div class="block music">
+      <span class="icon">🎻</span>
+      <div class="time">4 – 6pm</div>
+      <div class="activity">Cello practice</div>
+      <div class="note">Technique, scales, or repertoire</div>
+    </div>
+    <div class="block compose">
+      <span class="icon">🎼</span>
+      <div class="time">6 – 8pm</div>
+      <div class="activity">Composition</div>
+      <div class="note">Follow what came up in practice</div>
+    </div>
+    <div class="open-note">Evening after 8 — protect for rest</div>
+  </div>
+
+  <!-- THURSDAY -->
+  <div class="day-col">
+    <div class="day-label">Thursday</div>
+    <div class="block exercise">
+      <span class="icon">🏃</span>
+      <div class="time">8 – 9:30am</div>
+      <div class="activity">Exercise</div>
+      <div class="note">Mid-week movement</div>
+    </div>
+    <div class="block snail-mail">
+      <span class="icon">✉️</span>
+      <div class="time">9:30 – 10am</div>
+      <div class="activity">Snail mail prep</div>
+      <div class="note">Quick — stamp, seal, bag to mail</div>
+    </div>
+    <div class="busy">
+      <div class="time">10am – 4pm</div>
+      <div class="label">busy</div>
+    </div>
+    <div class="block self-care">
+      <span class="icon">🍳</span>
+      <div class="time">4 – 5:30pm</div>
+      <div class="activity">Cook dinner</div>
+      <div class="note">Slow it down after a long stretch</div>
+    </div>
+    <div class="block writing">
+      <span class="icon">✍️</span>
+      <div class="time">5:30 – 7:30pm</div>
+      <div class="activity">Writing</div>
+      <div class="note">Creative or reflective work</div>
+    </div>
+    <div class="busy">
+      <div class="time">8 – 10pm</div>
+      <div class="label">busy</div>
+    </div>
+  </div>
+
+  <!-- FRIDAY -->
+  <div class="day-col">
+    <div class="day-label">Friday</div>
+    <div class="block self-care">
+      <span class="icon">🛁</span>
+      <div class="time">9 – 11am</div>
+      <div class="activity">Self-care</div>
+      <div class="note">Bath, nails, something restorative</div>
+    </div>
+    <div class="busy">
+      <div class="time">11am – 4pm</div>
+      <div class="label">busy</div>
+    </div>
+    <div class="block exercise">
+      <span class="icon">🚴</span>
+      <div class="time">4 – 5pm</div>
+      <div class="activity">Exercise</div>
+      <div class="note">End-of-week movement reset</div>
+    </div>
+    <div class="block snail-mail">
+      <span class="icon">✉️</span>
+      <div class="time">5 – 7pm</div>
+      <div class="activity">Snail mail</div>
+      <div class="note">Friday mail-out day — post office run</div>
+    </div>
+    <div class="busy">
+      <div class="time">7 – 10pm</div>
+      <div class="label">busy</div>
+    </div>
+  </div>
+
+  <!-- SATURDAY -->
+  <div class="day-col">
+    <div class="day-label">Saturday</div>
+    <div class="block music">
+      <span class="icon">🎻</span>
+      <div class="time">10am – 12pm</div>
+      <div class="activity">Cello — longer session</div>
+      <div class="note">Saturday gives space for real depth</div>
+    </div>
+    <div class="block compose">
+      <span class="icon">🎼</span>
+      <div class="time">12 – 2pm</div>
+      <div class="activity">Composition</div>
+      <div class="note">Biggest creative window of the week</div>
+    </div>
+    <div class="block self-care">
+      <span class="icon">🍳</span>
+      <div class="time">2 – 3:30pm</div>
+      <div class="activity">Cook + rest</div>
+      <div class="note">Nourish yourself mid-day</div>
+    </div>
+    <div class="open-note">Afternoon/evening: overflow, errands, or genuine rest. Don't pre-fill Saturday.</div>
+  </div>
+
+</div>
+</body>
+</html>
