@@ -4,19 +4,39 @@
     <meta charset="UTF-8" />
     <title>Tip Calculator</title>
     <link rel="JavaScript" href="tipcalculator.js">
-    <link rel="styles" href="styles.css">
+    <styles>
+        * {display: flex; text-align: left; color: white;}
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+          margin-bottom: 1.25rem;
+        }
+ 
+        label {
+          font-size: 0.78rem;
+          font-weight: 600;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: #4A5568;
+        }
+    </styles>
 
 </head>
 <body>
     <h1>Welcome to the Tip Calculator!</h1>
-    <p1>Bill: $ </p1><input type="number" id="bill">
-    <br>
-    <p2>Tip Percentage (select 10, 15, or 20): </p2><input type="number" id = 'tip'>
-    <br>
-    <p3>Between how many people?: </p3><input type="number" id = 'people'>
-    <br>
-    <button id = 'button'>Calculate!</button>
+    <div class="form-group">
+        <label>Bill: $ </label><input type="number" id="bill">
+        <br>
+        <label>Tip Percentage (select 10, 15, or 20): </label><input type="number" id = 'tip'>
+        <br>
+        <label>Between how many people?: </label><input type="number" id = 'people'>
+        <br>
+        <button id = 'button'>Calculate!</button>
+    </div>
+
     <script src="tipcalculator.js">
     </script>
+    <div id="result"></div>
 </body>
 </html> 
