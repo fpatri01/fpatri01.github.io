@@ -16,6 +16,6 @@ var total_each = total_each.toFixed(2);
 //print total per person
 alert("The cost per person is $ " + total_each)
 let result = document.getElementById("result");
-result.innerHTML = total_each;
 result.classList.add("visible");
+result.innerHTML = total_each;
 } )
