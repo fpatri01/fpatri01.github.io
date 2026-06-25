@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Labelle Mail Club</title>
+  <link rel="icon" type="image" href="https://media.istockphoto.com/id/1174972778/photo/watercolor-pink-flower-rose-on-white-background.jpg?s=612x612&w=0&k=20&c=RJVUK0hEGR_0eHCxPQAt6XXGbgVt9iS6LIjofTY2y6E=">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --rose:     #FFB3C6;
+      --peach:    #FFDAB9;
+      --butter:   #FFF3B0;
+      --mint:     #B5EAD7;
+      --sky:      #C3E8FF;
+      --lavender: #D4B8FF;
+      --ink:      #3a3340;
+      --ink-light:#7a6e82;
+      --white:    #fffcfe;
+      --radius:   18px;
+      --transition: 0.4s ease;
+    }
+ 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      font-family: 'Lato', sans-serif;
+      color: var(--ink);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+ 
+    /* ── Rainbow bar ── */
+    .rainbow-bar {
+      height: 6px;
+      background: linear-gradient(
+        90deg,
+        var(--rose), var(--peach), var(--butter),
+        var(--mint), var(--sky), var(--lavender), var(--rose)
+      );
+      background-size: 200% 100%;
+      animation: shimmer 6s linear infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% 0; }
+      100% { background-position: 200% 0; }
+    }
+ 
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2.4rem;
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 0 rgba(58,51,64,0.08);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--ink); }
+ 
+    /* ── Hero ── */
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      background: linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--lavender) 40%, white),
+        color-mix(in srgb, var(--sky) 30%, white) 40%,
+        color-mix(in srgb, var(--mint) 30%, white) 70%,
+        color-mix(in srgb, var(--butter) 40%, white)
+      );
+    }
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.1;
+      color: var(--ink);
+      max-width: 14ch;
+      margin-bottom: 1.6rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: #9b7ec8;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--ink-light);
+      max-width: 50ch;
+      margin-bottom: 2.6rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border-radius: 100px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--lavender), var(--sky));
+      color: var(--ink);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--ink);
+      color: var(--ink);
+      margin-left: 1rem;
+    }
+    .hero-snail {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      animation: bob 3s ease-in-out infinite;
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+ 
+    /* ── Section base ── */
+    section { padding: 5rem 2rem; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.7rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    .body-text {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink-light);
+      max-width: 52ch;
+    }
+ 
+    /* ── About strip ── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .about-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .about-card {
+      border-radius: var(--radius);
+      padding: 1.8rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .about-card .icon { font-size: 1.8rem; }
+    .about-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .about-card p { font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; }
+    .card-rose     { background: color-mix(in srgb, var(--rose) 35%, white); }
+    .card-mint     { background: color-mix(in srgb, var(--mint) 40%, white); }
+    .card-butter   { background: color-mix(in srgb, var(--butter) 50%, white); }
+    .card-sky      { background: color-mix(in srgb, var(--sky) 40%, white); }
+ 
+    /* ── Slider ── */
+    .slider-section {
+      background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--peach) 25%, white),
+        color-mix(in srgb, var(--rose) 20%, white)
+      );
+    }
+    .slider-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .slider-wrap h2 { margin-bottom: 0.5rem; }
+    .slider-wrap .body-text { margin: 0 auto 2.5rem; }
+ 
+    .slider-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+    .slider-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .slide {
+      min-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 420px;
+      border-radius: var(--radius);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--ink-light);
+      flex-direction: column;
+      gap: 1rem;
+      user-select: none;
+    }
+    .slide .slide-icon { font-size: 3rem; }
+    .slide-rose     { background: color-mix(in srgb, var(--rose) 45%, white); }
+    .slide-peach    { background: color-mix(in srgb, var(--peach) 50%, white); }
+    .slide-butter   { background: color-mix(in srgb, var(--butter) 60%, white); }
+    .slide-mint     { background: color-mix(in srgb, var(--mint) 45%, white); }
+    .slide-sky      { background: color-mix(in srgb, var(--sky) 50%, white); }
+    .slide-lavender { background: color-mix(in srgb, var(--lavender) 45%, white); }
+ 
+    .slide-caption {
+      font-family: 'Lato', sans-serif;
+      font-style: normal;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+ 
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.85);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition), transform 0.2s;
+      z-index: 10;
+    }
+    .slider-btn:hover { background: white; transform: translateY(-50%) scale(1.1); }
+    .slider-btn.prev { left: 1rem; }
+    .slider-btn.next { right: 1rem; }
+ 
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.4rem;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--ink) 20%, white);
+      cursor: pointer;
+      border: none;
+      transition: background var(--transition), transform 0.2s;
+    }
+    .dot.active {
+      background: var(--ink-light);
+      transform: scale(1.3);
+    }
+ 
+    /* ── Subscription ── */
+    .subscribe-section {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .subscribe-section h2 { margin-bottom: 1rem; }
+    .subscribe-section .body-text { margin: 0 auto 2rem; }
+    .subscribe-form {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .subscribe-form input {
+      padding: 0.85rem 1.4rem;
+      border-radius: 100px;
+      border: 2px solid color-mix(in srgb, var(--ink) 15%, white);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: white;
+      min-width: 240px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .subscribe-form input:focus {
+      border-color: var(--lavender);
+    }
+    .subscribe-section .tiers {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+    .tier {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.8rem 1.6rem;
+      flex: 1;
+      min-width: 180px;
+      max-width: 220px;
+      text-align: left;
+      box-shadow: 0 2px 16px rgba(58,51,64,0.07);
+      border-top: 5px solid transparent;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tier:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(58,51,64,0.12); }
+    .tier-rose     { border-color: var(--rose); }
+    .tier-mint     { border-color: var(--mint); }
+    .tier-lavender { border-color: var(--lavender); }
+    .tier .price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0.4rem 0 0.2rem;
+    }
+    .tier .tier-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+    .tier .tier-desc {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+      margin-top: 0.6rem;
+    }
+ 
+    /* ── Footer ── */
+    footer {
+      padding: 3rem 2rem;
+      background: color-mix(in srgb, var(--ink) 92%, white);
+      color: rgba(255,252,254,0.65);
+      text-align: center;
+    }
+    footer .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    footer p { font-size: 0.85rem; line-height: 1.7; }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.2rem;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a {
+      color: rgba(255,252,254,0.5);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color var(--transition);
+    }
+    footer .footer-links a:hover { color: var(--white); }
+ 
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.78rem; }
+      .about { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-visual { order: -1; }
+      .slide { height: 300px; font-size: 1rem; }
+      .subscribe-form input { min-width: 100%; }
+      .btn-outline { margin-left: 0; margin-top: 0.75rem; }
+      .hero-ctas { display: flex; flex-direction: column; align-items: center; }
+    }
+ 
+    @media (prefers-reduced-motion: reduce) {
+      .rainbow-bar, .hero-snail { animation: none; }
+      .slider-track { transition: none; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <div class="rainbow-bar"></div>
+ 
+  <!-- Nav -->
+  <nav>
+    <a class="nav-logo" href="#">🌺 Labelle Mail Club</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#crafts">Crafts</a></li>
+      <li><a href="#subscribe">Subscribe</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-snail" aria-hidden="true">🌴</div>
+    <p class="hero-eyebrow">A monthly letter in your mailbox</p>
+    <h1>Slow down. <em>Write.</em> Connect.</h1>
+    <p>Placeholder text — describe what makes your snail mail club special, who it's for, and what subscribers can expect each month.</p>
+    <div class="hero-ctas">
+      <a href="#subscribe" class="btn btn-primary">Join the Club</a>
+      <a href="#crafts" class="btn btn-outline">See the Crafts</a>
+    </div>
+  </section>
+ 
+  <!-- About -->
+  <section id="about">
+    <div class="about">
+      <div>
+        <p class="section-label">About the club</p>
+        <h2>Letters made with love &amp; a little glitter</h2>
+        <p class="body-text">Placeholder text — tell your story. Why did you start this? What do subscribers receive? Share the heart behind your snail mail practice and what makes each envelope feel like a tiny gift.</p>
+      </div>
+      <div class="about-visual">
+        <div class="about-card card-rose">
+          <span class="icon">✉️</span>
+          <h3>Handwritten notes</h3>
+          <p>Placeholder description of this feature or offering.</p>
+        </div>
+        <div class="about-card card-mint">
+          <span class="icon">🎨</span>
+          <h3>Original crafts</h3>
+          <p>Placeholder description of this feature or offering.</p>
+        </div>
+        <div class="about-card card-butter">
+          <span class="icon">📦</span>
+          <h3>Monthly surprises</h3>
+          <p>Placeholder description of this feature or offering.</p>
+        </div>
+        <div class="about-card card-sky">
+          <span class="icon">🌈</span>
+          <h3>Pastel everything</h3>
+          <p>Placeholder description of this feature or offering.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Slider -->
+  <section class="slider-section" id="crafts">
+    <div class="slider-wrap">
+      <p class="section-label">From the craft table</p>
+      <h2>Things I've made with my hands</h2>
+      <p class="body-text">Placeholder text — introduce your crafts gallery. Each slide represents something you've created and included in past mailings.</p>
+ 
+      <div class="slider-container">
+        <div class="slider-track" id="sliderTrack">
+ 
+          <span class="slide slide-rose">
+            <span class="slide-icon" aria-hidden="true">🖼️</span>
+            Craft image placeholder — watercolor card
+            <span class="slide-caption">Watercolor Cards · January 2025</span>
+          </span>
+ 
+          <span class="slide slide-peach">
+            <span class="slide-icon" aria-hidden="true">🖼️</span>
+            Craft image placeholder — pressed flower bookmark
+            <span class="slide-caption">Pressed Flowers · February 2025</span>
+          </span>
+ 
+          <span class="slide slide-butter">
+            <span class="slide-icon" aria-hidden="true">🖼️</span>
+            Craft image placeholder — wax seal stickers
+            <span class="slide-caption">Wax Seals · March 2025</span>
+          </span>
+ 
+          <span class="slide slide-mint">
+            <span class="slide-icon" aria-hidden="true">🖼️</span>
+            Craft image placeholder — hand-stamped envelope
+            <span class="slide-caption">Stamped Envelopes · April 2025</span>
+          </span>
+ 
+          <span class="slide slide-sky">
+            <span class="slide-icon" aria-hidden="true">🖼️</span>
+            Craft image placeholder — mini zine
+            <span class="slide-caption">Mini Zines · May 2025</span>
+          </span>
+ 
+          <span class="slide slide-lavender">
+            <span class="slide-icon" aria-hidden="true">🖼️</span>
+            Craft image placeholder — illustrated postcard
+            <span class="slide-caption">Illustrated Postcards · June 2025</span>
+          </span>
+ 
+        </div>
+ 
+        <button class="slider-btn prev" id="prevBtn" aria-label="Previous slide">&#8592;</button>
+        <button class="slider-btn next" id="nextBtn" aria-label="Next slide">&#8594;</button>
+      </div>
+ 
+      <div class="slider-dots" id="sliderDots" role="tablist" aria-label="Slide navigation"></div>
+    </div>
+  </section>
+ 
+  <!-- Subscribe -->
+  <section id="subscribe">
+    <div class="subscribe-section">
+      <p class="section-label">Join us</p>
+      <h2>A little something in your mailbox every month</h2>
+      <p class="body-text">Placeholder text — encourage visitors to subscribe. What will they receive? How often? Why is it worth it?</p>
+      <div class="subscribe-form">
+        <input type="email" placeholder="your@email.com" aria-label="Email address" />
+        <button class="btn btn-primary">Subscribe</button>
+      </div>
+ 
+      <div class="tiers">
+        <div class="tier tier-rose">
+          <span class="tier-name">Seedling</span>
+          <div class="price">$X/mo</div>
+          <p class="tier-desc">Placeholder — describe what this tier includes and who it's best for.</p>
+        </div>
+        <div class="tier tier-mint">
+          <span class="tier-name">Bloomer</span>
+          <div class="price">$X/mo</div>
+          <p class="tier-desc">Placeholder — describe what this tier includes and who it's best for.</p>
+        </div>
+        <div class="tier tier-lavender">
+          <span class="tier-name">Full Bloom</span>
+          <div class="price">$X/mo</div>
+          <p class="tier-desc">Placeholder — describe what this tier includes and who it's best for.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">🐌 Labelle Mail Club</div>
+    <p>Placeholder tagline — something warm and personal about your club.</p>
+    <nav class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Contact</a>
+      <a href="#">FAQ</a>
+      <a href="#">Privacy</a>
+    </nav>
+    <p style="margin-top:1.5rem; font-size:0.75rem;">© 2025 Labelle Mail Club. Made with care.</p>
+  </footer>
+ 
+  <script>
+    const track = document.getElementById('sliderTrack');
+    const slides = track.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('sliderDots');
+    let current = 0;
+    let autoTimer;
+ 
+    // Build dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    });
+ 
+    function updateDots() {
+      dotsContainer.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+ 
+    function goTo(index) {
+      current = (index + slides.length) % slides.length;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      updateDots();
+    }
+ 
+    function startAuto() {
+      autoTimer = setInterval(() => goTo(current + 1), 4000);
+    }
+    function stopAuto() { clearInterval(autoTimer); }
+ 
+    document.getElementById('prevBtn').addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
+    document.getElementById('nextBtn').addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
+ 
+    // Touch/swipe
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; stopAuto(); }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+      startAuto();
+    });
+ 
+    startAuto();
+  </script>
+</body>
+</html>
