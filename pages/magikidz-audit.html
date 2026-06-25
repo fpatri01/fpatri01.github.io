@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MagiKidz — Where Every Party Becomes Magic</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #F5F5F5; color: #1a1a1a; }
+
+    /* NAV */
+    .nav { background: #003A8C; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+    .nav-logo { color: #fff; font-size: 22px; font-weight: 700; letter-spacing: 0.04em; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo span { color: #E09000; }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a { color: #93C0FF; font-size: 13px; font-weight: 500; text-decoration: none; padding: 6px 12px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav-links a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-cta { background: #C0000A; color: #fff; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 8px; text-decoration: none; transition: background 0.15s; white-space: nowrap; }
+    .nav-cta:hover { background: #A00009; }
+
+    /* HERO */
+    .hero { background: linear-gradient(135deg, #003A8C 0%, #001F5A 100%); padding: 72px 2rem 64px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: '★'; position: absolute; font-size: 320px; color: rgba(224,144,0,0.07); top: -60px; right: -40px; line-height: 1; pointer-events: none; }
+    .hero-eyebrow { display: inline-block; background: rgba(224,144,0,0.2); color: #E09000; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 14px; border-radius: 999px; margin-bottom: 20px; }
+    .hero h1 { color: #fff; font-size: 42px; font-weight: 800; line-height: 1.15; max-width: 620px; margin: 0 auto 16px; }
+    .hero h1 em { color: #E09000; font-style: normal; }
+    .hero-sub { color: #93C0FF; font-size: 16px; line-height: 1.6; max-width: 480px; margin: 0 auto 32px; }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: #C0000A; color: #fff; font-size: 15px; font-weight: 600; padding: 13px 28px; border-radius: 10px; text-decoration: none; transition: background 0.15s; }
+    .btn-primary:hover { background: #A00009; }
+    .btn-secondary { background: transparent; color: #fff; font-size: 15px; font-weight: 500; padding: 13px 28px; border-radius: 10px; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.3); transition: border-color 0.15s; }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.7); }
+
+    /* TRUST STRIP */
+    .trust { background: #E09000; padding: 14px 2rem; display: flex; gap: 2rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+    .trust-item { color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .trust-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.5); }
+
+    /* SECTION */
+    .section { padding: 56px 2rem; max-width: 960px; margin: 0 auto; }
+    .section-label { font-size: 12px; font-weight: 600; color: #C0000A; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+    .section-title { font-size: 28px; font-weight: 800; color: #003A8C; margin-bottom: 8px; }
+    .section-sub { font-size: 15px; color: #555; margin-bottom: 32px; max-width: 520px; }
+
+    /* SERVICE CARDS */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .service-card { background: #fff; border-radius: 14px; overflow: hidden; border: 0.5px solid #e0e0e0; transition: transform 0.15s; cursor: pointer; }
+    .service-card:hover { transform: translateY(-3px); }
+    .service-top { padding: 28px 20px 20px; }
+    .service-icon { font-size: 32px; margin-bottom: 12px; }
+    .service-name { font-size: 16px; font-weight: 700; color: #003A8C; margin-bottom: 6px; }
+    .service-desc { font-size: 13px; color: #666; line-height: 1.5; }
+    .service-footer { background: #E8F0FE; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .service-tag { font-size: 11px; font-weight: 600; color: #003A8C; }
+    .service-arrow { color: #C0000A; font-size: 16px; font-weight: 700; }
+
+    /* BOOKING BAND */
+    .booking-band { background: #003A8C; padding: 48px 2rem; text-align: center; }
+    .booking-band h2 { color: #fff; font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+    .booking-band p { color: #93C0FF; font-size: 15px; margin-bottom: 28px; }
+    .booking-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 680px; margin: 0 auto; }
+    .booking-form input,
+    .booking-form select { padding: 12px 16px; border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: #fff; font-size: 14px; flex: 1; min-width: 140px; outline: none; }
+    .booking-form input::placeholder { color: rgba(255,255,255,0.5); }
+    .booking-form select { color: rgba(255,255,255,0.7); }
+    .booking-form select option { color: #1a1a1a; background: #fff; }
+    .booking-form button { background: #C0000A; color: #fff; font-size: 14px; font-weight: 700; padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer; white-space: nowrap; }
+    .booking-form button:hover { background: #A00009; }
+
+    /* GALLERY STRIP */
+    .gallery-strip { display: flex; gap: 12px; overflow-x: auto; padding: 0 0 8px; scrollbar-width: none; }
+    .gallery-strip::-webkit-scrollbar { display: none; }
+    .gallery-item { min-width: 200px; height: 150px; border-radius: 12px; overflow: hidden; flex-shrink: 0; position: relative; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,58,140,0.6) 0%, transparent 60%); display: flex; align-items: flex-end; padding: 10px; }
+    .gallery-overlay span { color: #fff; font-size: 11px; font-weight: 600; }
+
+    /* REVIEWS */
+    .reviews-bg { background: #E8F0FE; padding: 56px 0; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .review-card { background: #fff; border-radius: 12px; padding: 20px; border: 0.5px solid #e0e0e0; }
+    .review-stars { color: #E09000; font-size: 14px; margin-bottom: 10px; letter-spacing: 2px; }
+    .review-text { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 14px; }
+    .review-author { font-size: 12px; font-weight: 600; color: #003A8C; }
+
+    /* FOOTER */
+    .footer { background: #001F5A; padding: 48px 2rem 24px; }
+    .footer-inner { max-width: 960px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; margin-bottom: 36px; }
+    .footer-col-title { color: #E09000; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .footer-col a { display: block; color: #93C0FF; font-size: 13px; text-decoration: none; margin-bottom: 6px; }
+    .footer-col a:hover { color: #fff; }
+    .footer-col p { color: #93C0FF; font-size: 13px; line-height: 1.6; }
+    .footer-bottom { border-top: 0.5px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; color: rgba(255,255,255,0.35); font-size: 12px; }
+    .badge-new { background: #C0000A; color: #fff; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 28px; }
+      .trust { gap: 1rem; }
+      .trust-dot { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#" class="nav-logo"><image src="magikidz-logo.png"></a>
+    <div class="nav-links">
+      <a href="#">Entertainment</a>
+      <a href="#">Classes</a>
+      <a href="#">Corporate</a>
+      <a href="#">Gallery</a>
+      <a href="#">About</a>
+    </div>
+    <a href="#booking" class="nav-cta">Get a quote →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">✦ Serving the Bay Area for 10+ years</div>
+    <h1>Where every party becomes <em>magic</em></h1>
+    <p class="hero-sub">Face painting, characters, tattoo art, and interactive workshops — for birthdays, schools, and corporate events of all sizes.</p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary">Book entertainment</a>
+      <a href="#services" class="btn-secondary">See what we do</a>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust">
+    <div class="trust-item">✦ 10+ years in the Bay Area</div>
+    <div class="trust-dot"></div>
+    <div class="trust-item">✦ Kids, teens &amp; corporate events</div>
+    <div class="trust-dot"></div>
+    <div class="trust-item">✦ In-person &amp; virtual available</div>
+    <div class="trust-dot"></div>
+    <div class="trust-item">✦ Insured &amp; background-checked artists</div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section">
+      <div class="section-label">What we do</div>
+      <div class="section-title">Entertainment for every occasion</div>
+      <div class="section-sub">From backyard birthdays to school carnivals — we bring the fun to you.</div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-top">
+            <div class="service-icon">🎨</div>
+            <div class="service-name">Face painting</div>
+            <div class="service-desc">Professional artists transform kids into their favorite characters, animals, and superheroes.</div>
+          </div>
+          <div class="service-footer">
+            <span class="service-tag">All ages</span>
+            <span class="service-arrow">→</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-top">
+            <div class="service-icon">👑</div>
+            <div class="service-name">Characters &amp; shows</div>
+            <div class="service-desc">Princess, superhero, and storybook characters that bring the party to life.</div>
+          </div>
+          <div class="service-footer">
+            <span class="service-tag">Kids · Ages 2–12</span>
+            <span class="service-arrow">→</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-top">
+            <div class="service-icon">✏️</div>
+            <div class="service-name">Caricatures</div>
+            <div class="service-desc">Fun, fast portrait sketches that make the perfect party keepsake to take home.</div>
+          </div>
+          <div class="service-footer">
+            <span class="service-tag">All ages</span>
+            <span class="service-arrow">→</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-top">
+            <div class="service-icon">🌸</div>
+            <div class="service-name">Teen tattoo art</div>
+            <div class="service-desc">Glitter, henna-style, and temporary tattoo designs that teens actually love.</div>
+          </div>
+          <div class="service-footer">
+            <span class="service-tag">Teens &amp; adults</span>
+            <span class="service-arrow">→</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-top">
+            <div class="service-icon">🏢</div>
+            <div class="service-name">Corporate events</div>
+            <div class="service-desc">Family-friendly entertainment that delights employees and their kids at company gatherings.</div>
+          </div>
+          <div class="service-footer">
+            <span class="service-tag">All sizes</span>
+            <span class="service-arrow">→</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-top">
+            <div class="service-icon">💻</div>
+            <div class="service-name">Virtual classes <span class="badge-new">VIRTUAL</span></div>
+            <div class="service-desc">Interactive online workshops — art, makeup, and more — streamed right to your guests.</div>
+          </div>
+          <div class="service-footer">
+            <span class="service-tag">Remote-friendly</span>
+            <span class="service-arrow">→</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING BAND -->
+  <section id="booking" class="booking-band">
+    <h2>Ready to book?</h2>
+    <p>Tell us about your event and we'll get back to you within 24 hours.</p>
+    <div class="booking-form">
+      <input type="text" placeholder="Your name" />
+      <input type="text" placeholder="Event date" />
+      <select>
+        <option value="">Choose a service…</option>
+        <option>Face painting</option>
+        <option>Characters &amp; show</option>
+        <option>Caricatures</option>
+        <option>Teen tattoo art</option>
+        <option>Corporate event</option>
+        <option>Virtual class</option>
+      </select>
+      <button type="button">Get a quote →</button>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section>
+    <div class="section">
+      <div class="section-label">Gallery</div>
+      <div class="section-title">See the magic in action</div>
+      <div class="section-sub">Real events, real smiles.</div>
+      <div class="gallery-strip">
+        <div class="gallery-item">
+          <img src="https://www.magikidz.com/wp-content/uploads/2016/03/bri_club.jpg" alt="Face painting at an event" />
+          <div class="gallery-overlay"><span>Face painting</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://www.magikidz.com/wp-content/uploads/2017/03/Sophia_paintheadshot-320x200.jpg" alt="Artist painting a child's face" />
+          <div class="gallery-overlay"><span>Our artists</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://www.magikidz.com/wp-content/uploads/2016/03/CaricatureLittleBoy_piercelarick-320x200.jpg" alt="Caricature of a little boy" />
+          <div class="gallery-overlay"><span>Caricatures</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://www.magikidz.com/wp-content/uploads/2016/03/bri_catinhat.jpg" alt="Cat in the Hat character" />
+          <div class="gallery-overlay"><span>Characters</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://www.magikidz.com/wp-content/uploads/2020/12/Sarah_littlemermaid-320x200.jpg" alt="Little mermaid princess character" />
+          <div class="gallery-overlay"><span>Princess shows</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://www.magikidz.com/wp-content/uploads/2016/03/Wonderwoman_Drea-320x200.jpg" alt="Wonder Woman superhero character" />
+          <div class="gallery-overlay"><span>Superhero shows</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-bg">
+    <div class="section" style="padding-top: 0; padding-bottom: 0;">
+      <div class="section-label">What families say</div>
+      <div class="section-title">Loved by Bay Area families</div>
+      <div style="margin-bottom: 28px;"></div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"The face painter was incredible — every kid at my daughter's birthday wanted to go back for more. Worth every penny."</div>
+          <div class="review-author">— Maria T., San Jose</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"MagiKidz made our school carnival unforgettable. The artists were professional, fast, and so patient with the little ones."</div>
+          <div class="review-author">— Principal Chen, Oakland</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"Our teen daughter and her friends absolutely loved the tattoo artist. It felt grown-up and fun — perfect for a 13th birthday."</div>
+          <div class="review-author">— David K., San Francisco</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="color:#fff; font-size:18px; font-weight:800; margin-bottom:10px;">✦ MAGI<span style="color:#E09000">KIDZ</span></div>
+          <p>Interactive entertainment and workshops for celebrations large and small — Bay Area's favorite since 2013.</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Entertainment</div>
+          <a href="#">Face painting</a>
+          <a href="#">Characters &amp; shows</a>
+          <a href="#">Caricatures</a>
+          <a href="#">Teen tattoo art</a>
+          <a href="#">Virtual classes</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About us</a>
+          <a href="#">Meet the artists</a>
+          <a href="#">Corporate events</a>
+          <a href="#">Gallery</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Contact</div>
+          <p>Bay Area, California</p>
+          <a href="#booking" style="margin-top: 8px; display: block;">Send us a message</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2025 MagiKidz · All rights reserved</div>
+    </div>
+  </footer>
+/* Audit and mock up built in conjunction with ai generation CLAUDE */
+</body>
+</html>
