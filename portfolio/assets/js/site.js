@@ -15,7 +15,7 @@ const SITE = {
   footerLinks: [                          // add, remove, or reorder freely
     // { label: "GitHub", href: "https://github.com/fpatri01" },
     // { label: "LinkedIn", href: "https://www.linkedin.com/in/faithlspatrick/" },
-    { label: "Email",    href: "mailto:faithlashaepatrick@gmail.com" },
+    { label: "faithlashaepatrick@gmail.com",    href: "mailto:faithlashaepatrick@gmail.com" },
   ],
 };
 
