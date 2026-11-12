@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+  template.html — copy this file to start any new page.
+  Search for "EDIT:" to find the parts that change from page to page.
+  Everything else (header, footer, styles, scripts) is shared.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- EDIT: page title (keep under ~60 characters) and short description -->
+  <title>Page Title | Faith Patrick</title>
+  <meta name="description" content="One or two sentences describing this page.">
+
+  <!-- Link previews (when the page is shared). EDIT: title, description, image -->
+  <meta property="og:title" content="Page Title">
+  <meta property="og:description" content="One or two sentences describing this page.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/assets/img/share-card.jpg">
+
+  <!-- Fonts: Fraunces (headings) and Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Header is built by site.js. The noscript fallback keeps navigation working without JavaScript. -->
+  <div id="site-header"></div>
+  <noscript>
+    <nav class="container" aria-label="Main">
+      <a href="/">Home</a> · <a href="/work/">Work</a> · <a href="/notes/">Notes</a> ·
+      <a href="/about/">About</a> · <a href="/contact/">Contact</a>
+    </nav>
+  </noscript>
+
+  <main id="main">
+    <div class="container">
+
+      <!-- EDIT: everything between here and the closing comment is this page's content -->
+      <section class="hero">
+        <p class="eyebrow">Section label</p>
+        <h1>Page heading</h1>
+        <p class="lede">A one- or two-sentence introduction to the page.</p>
+      </section>
+
+      <section class="section">
+        <h2>Section heading</h2>
+        <p>Body text goes here.</p>
+
+        <!-- Example: a grid of cards. Copy a card to add another. -->
+        <div class="grid">
+          <article class="card">
+            <h3><a href="/work/example-project/">Example project</a></h3>
+            <p>One sentence on what it is and why it matters.</p>
+            <ul class="tags">
+              <li class="tag">lutherie</li>
+              <li class="tag">acoustics</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+      <!-- end of page content -->
+
+    </div>
+  </main>
+
+  <!-- Footer is built by site.js -->
+  <div id="site-footer"></div>
+
+  <script src="/assets/js/site.js" defer></script>
+</body>
+</html>
