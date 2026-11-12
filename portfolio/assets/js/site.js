@@ -7,15 +7,15 @@
 const SITE = {
   name: "Faith Lashae Patrick",          // shown top-left and in the footer
   nav: [                                  // order here = order in the menu
-    { label: "Work",    href: "/work/" },
-    { label: "Notes",   href: "/notes/" },
-    { label: "About",   href: "/about/" },
-    { label: "Contact", href: "/contact/" },
+    { label: "Work",    href: "/portfolio/work/" },
+    { label: "Notes",   href: "/portfolio/notes/" },
+    { label: "About",   href: "/portfolio/about/" },
+    { label: "Contact", href: "/portfolio/contact/" },
   ],
   footerLinks: [                          // add, remove, or reorder freely
     // { label: "GitHub", href: "https://github.com/fpatri01" },
-    // { label: "LinkedIn", href: "https://www.linkedin.com/in/your-handle/" },
-    { label: "Email",    href: "mailto:you@example.com" },
+    // { label: "LinkedIn", href: "https://www.linkedin.com/in/faithlspatrick/" },
+    { label: "Email",    href: "mailto:faithlashaepatrick@gmail.com" },
   ],
 };
 
