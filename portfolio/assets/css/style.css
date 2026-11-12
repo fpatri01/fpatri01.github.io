@@ -1,0 +1,279 @@
+/* ==========================================================================
+   style.css — shared by every page.
+   Change the look of the whole site by editing the variables in :root.
+   ========================================================================== */
+
+/* ---------- 1. Design tokens ---------- */
+:root {
+  /* Color */
+  --bg:         #F6EFE6;  /* cream */
+  --surface:    #FBF7F1;  /* lighter cream for cards */
+  --border:     #E4D3BF;  /* sand */
+  --text:       #3B2A20;  /* walnut */
+  --text-muted: #6E5A4C;  /* softened walnut */
+  --accent:     #B65C3A;  /* terracotta */
+  --accent-ink: #FFFFFF;  /* text on accent */
+  --secondary:  #C8913A;  /* varnish amber */
+  --quiet:      #7A8450;  /* olive */
+
+  /* Type */
+  --font-heading: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Scale and spacing */
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(2rem, 4vw + 1rem, 3.25rem);
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4.5rem;
+
+  --radius: 10px;
+  --measure: 68ch;        /* comfortable reading width */
+  --container: 1080px;
+}
+
+/* ---------- 1b. Optional dark mode (delete this block for one look only) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #231913;
+    --surface:    #2D2119;
+    --border:     #4A382C;
+    --text:       #F1E6D8;
+    --text-muted: #BFA995;
+    --accent:     #D9835F;
+    --accent-ink: #231913;
+    --secondary:  #D9A653;
+    --quiet:      #A3AE72;
+  }
+}
+
+/* ---------- 2. Reset and base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg, video { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 var(--space-2);
+}
+h1 { font-size: var(--step-3); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+
+p { margin: 0 0 var(--space-2); max-width: var(--measure); }
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+a:hover { color: var(--text); }
+
+:focus-visible {
+  outline: 3px solid var(--secondary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- 3. Layout ---------- */
+.container {
+  width: min(100% - 2 * var(--space-3), var(--container));
+  margin-inline: auto;
+}
+
+main { padding-block: var(--space-4) var(--space-5); }
+
+.section { margin-top: var(--space-5); }
+
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: -4rem;
+  background: var(--text);
+  color: var(--bg);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+  z-index: 100;
+}
+.skip-link:focus { top: var(--space-1); }
+
+/* ---------- 4. Header and navigation (markup is built by site.js) ---------- */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4.25rem;
+  gap: var(--space-3);
+}
+
+.brand {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--step-1);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-list {
+  display: flex;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  padding-block: 0.25rem;
+  border-bottom: 2px solid transparent;
+}
+.nav-list a:hover { color: var(--text); }
+.nav-list a[aria-current="page"] {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font: inherit;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+
+@media (max-width: 680px) {
+  .nav-toggle { display: inline-block; }
+  .nav-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-1) var(--space-3) var(--space-2);
+  }
+  .nav-list.is-open { display: flex; }
+  .nav-list a { display: block; padding-block: 0.75rem; }
+}
+
+/* ---------- 5. Footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding-block: var(--space-4);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+.site-footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.footer-links { display: flex; gap: var(--space-3); list-style: none; margin: 0; padding: 0; }
+.footer-links a { color: var(--text-muted); }
+.footer-links a:hover { color: var(--accent); }
+
+/* ---------- 6. Reusable components ---------- */
+.hero { padding-block: var(--space-4) 0; }
+.hero .lede {
+  font-size: var(--step-1);
+  color: var(--text-muted);
+  max-width: 52ch;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--quiet);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--accent);
+}
+.btn:hover { background: transparent; color: var(--accent); }
+.btn--ghost { background: transparent; color: var(--accent); }
+.btn--ghost:hover { background: var(--accent); color: var(--accent-ink); }
+
+.grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.card:hover { transform: translateY(-2px); border-color: var(--secondary); }
+.card h3 { margin-bottom: var(--space-1); }
+.card a { text-decoration: none; color: inherit; }
+.card p { color: var(--text-muted); margin-bottom: var(--space-2); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; margin: 0; padding: 0; }
+.tag {
+  font-size: 0.8rem;
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: transparent;
+}
+button.tag { font-family: inherit; cursor: pointer; }
+button.tag:hover,
+button.tag[aria-pressed="true"] {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: #2A1D14;
+}
+
+/* ---------- 7. Respect reduced-motion preferences ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card { transition: none; }
+}
