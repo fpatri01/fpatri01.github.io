@@ -13,9 +13,9 @@ const SITE = {
     { label: "Contact", href: "/contact/" },
   ],
   footerLinks: [                          // add, remove, or reorder freely
-    { label: "GitHub", href: "https://github.com/fpatri01" },
+    // { label: "GitHub", href: "https://github.com/fpatri01" },
     // { label: "LinkedIn", href: "https://www.linkedin.com/in/your-handle/" },
-    // { label: "Email",    href: "mailto:you@example.com" },
+    { label: "Email",    href: "mailto:you@example.com" },
   ],
 };
 
