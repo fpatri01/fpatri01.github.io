@@ -25,8 +25,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Shared styles -->
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/portfolio/assets/css/style.css">
+  <link rel="icon" href="/portfolio/assets/img/favicon.svg" type="image/svg+xml">
 </head>
 
 <body>
@@ -75,6 +75,6 @@
   <!-- Footer is built by site.js -->
   <div id="site-footer"></div>
 
-  <script src="/assets/js/site.js" defer></script>
+  <script src="/portfolio/assets/js/site.js" defer></script>
 </body>
 </html>
