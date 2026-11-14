@@ -28,7 +28,7 @@ function buildHeader() {
   return `
     <header class="site-header">
       <div class="container">
-        <a class="brand" href="/">${SITE.name}</a>
+        <a class="brand" href="/portfolio">${SITE.name}</a>
         <button class="nav-toggle" type="button"
                 aria-expanded="false" aria-controls="nav-list">Menu</button>
         <nav aria-label="Main">
