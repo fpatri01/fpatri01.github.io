@@ -1,0 +1,267 @@
+<title>Camilo's Birthday Card</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@500&display=swap">
+<style>
+  /* Layout: one chunky card on a loud yellow ground, flips from cover to inside */
+  :root {
+    --paper: #ffd60a;
+    --ink: #14110f;
+    --pink: #ff3d81;
+    --blue: #2b4cff;
+    --cream: #fff6d6;
+    --display: "Bowlby One", "Arial Black", Impact, sans-serif;
+    --body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "DM Mono", ui-monospace, Menlo, monospace;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1rem/1.5 var(--body);
+    padding-block: 2rem 3rem;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    min-height: 100%;
+  }
+  .stage { max-width: 30rem; margin: 0 auto; position: relative; }
+
+  .card {
+    background: var(--cream);
+    border: 4px solid var(--ink);
+    border-radius: 6px;
+    box-shadow: 10px 10px 0 var(--ink);
+    padding: 1.75rem 1.5rem 2rem;
+    position: relative;
+  }
+
+  .sticker {
+    position: absolute;
+    top: -1.1rem; right: -0.6rem;
+    background: var(--pink);
+    color: var(--cream);
+    border: 3px solid var(--ink);
+    font: 500 0.72rem/1 var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.55rem 0.7rem;
+    transform: rotate(6deg);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .eyebrow {
+    font: 500 0.75rem/1 var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+  }
+
+  h1 {
+    font: 400 clamp(2.6rem, 14vw, 4.2rem)/0.95 var(--display);
+    margin: 0 0 1.25rem;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  h1 .hl-pink { color: var(--pink); }
+  h1 .hl-blue { color: var(--blue); }
+  h1 .name {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.05em 0.14em 0;
+    transform: rotate(-2deg);
+    margin-top: 0.1em;
+  }
+
+  h2 {
+    font: 400 clamp(1.8rem, 9vw, 2.4rem)/1 var(--display);
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+  }
+
+  p { margin: 0 0 1rem; max-width: 36rem; }
+  .lede { font-size: 1.15rem; font-weight: 500; }
+
+  .btn {
+    font: 400 1rem/1 var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: var(--blue);
+    color: var(--cream);
+    border: 3px solid var(--ink);
+    border-radius: 4px;
+    padding: 0.95rem 1.3rem;
+    box-shadow: 5px 5px 0 var(--ink);
+    cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  .btn:hover { transform: translate(-1px, -1px); box-shadow: 6px 6px 0 var(--ink); }
+  .btn:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 var(--ink); }
+  .btn:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
+  .btn.alt { background: var(--cream); color: var(--ink); }
+  .btn.hot { background: var(--pink); }
+  .row { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.5rem; }
+
+  .report {
+    border: 3px solid var(--ink);
+    background: var(--paper);
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+  .report-head {
+    background: var(--ink);
+    color: var(--paper);
+    font: 500 0.72rem/1 var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.6rem 0.8rem;
+  }
+  .report dl { margin: 0; }
+  .report .line {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 0.75rem;
+    padding: 0.7rem 0.8rem;
+    border-top: 2px dashed var(--ink);
+  }
+  .report .line:first-child { border-top: 0; }
+  .report dt { font: 500 0.8rem/1.35 var(--mono); text-transform: uppercase; letter-spacing: 0.04em; }
+  .report dd { margin: 0; font-weight: 700; line-height: 1.35; }
+
+  .sign { font: 400 1.5rem/1 var(--display); margin: 1.5rem 0 0; color: var(--pink); }
+
+  .view[hidden] { display: none !important; }
+
+  #confetti {
+    position: fixed; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .view { animation: pop 0.28s ease-out; }
+    @keyframes pop {
+      from { transform: translateY(10px) scale(0.98); opacity: 0; }
+      to { transform: none; opacity: 1; }
+    }
+  }
+</style>
+
+<main class="stage">
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <section id="cover" class="view card" aria-label="Card cover">
+    <div class="sticker">Official notice</div>
+    <p class="eyebrow">A card for one (1) person</p>
+    <h1>
+      <span class="hl-pink">Happy</span><br>
+      <span class="hl-blue">Birthday,</span><br>
+      <span class="name">Camilo.</span>
+    </h1>
+    <p class="lede">You have been alive for another full year. Doctors are shocked. Friends are mildly impressed.</p>
+    <div class="row">
+      <button class="btn" id="open" type="button">Open it</button>
+    </div>
+  </section>
+
+  <section id="inside" class="view card" aria-label="Card inside" hidden>
+    <p class="eyebrow">Page two, the sincere part</p>
+    <h2>Okay, real talk.</h2>
+    <p class="lede">You are a good person to have in my life, and today is a great excuse to say so.</p>
+    <p>I hope your day is full of cake, people who make you laugh, and at least one moment where you get to do absolutely nothing.</p>
+
+    <div class="report">
+      <div class="report-head">Birthday status report</div>
+      <dl>
+        <div class="line"><dt>Cake required</dt><dd>Yes. Non-negotiable.</dd></div>
+        <div class="line"><dt>Wisdom gained</dt><dd>Still loading</dd></div>
+        <div class="line"><dt>Maturity level</dt><dd>No change detected</dd></div>
+        <div class="line"><dt>Candles</dt><dd>Fire marshal has been notified</dd></div>
+        <div class="line"><dt>Gift</dt><dd>This card. It is worth exactly what you paid for it.</dd></div>
+      </dl>
+    </div>
+
+    <p>Eat something delicious. You earned it. Probably.</p>
+    <p class="sign">Love, Faith</p>
+
+    <div class="row">
+      <button class="btn hot" id="boom" type="button">Throw confetti</button>
+      <button class="btn alt" id="back" type="button">Back to cover</button>
+    </div>
+  </section>
+</main>
+
+<script>
+  (function () {
+    var cover = document.getElementById("cover");
+    var inside = document.getElementById("inside");
+    var canvas = document.getElementById("confetti");
+    var ctx = canvas.getContext("2d");
+    var colors = ["#ff3d81", "#2b4cff", "#14110f", "#fff6d6", "#ffffff"];
+    var pieces = [];
+    var running = false;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function size() {
+      var dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    size();
+    window.addEventListener("resize", size);
+
+    function burst() {
+      if (reduce) return;
+      var w = window.innerWidth;
+      for (var i = 0; i < 140; i++) {
+        pieces.push({
+          x: w / 2 + (Math.random() - 0.5) * w * 0.3,
+          y: window.innerHeight * 0.55,
+          vx: (Math.random() - 0.5) * 14,
+          vy: -8 - Math.random() * 12,
+          s: 6 + Math.random() * 8,
+          r: Math.random() * Math.PI,
+          vr: (Math.random() - 0.5) * 0.4,
+          c: colors[(Math.random() * colors.length) | 0]
+        });
+      }
+      if (!running) { running = true; requestAnimationFrame(tick); }
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      pieces = pieces.filter(function (p) { return p.y < window.innerHeight + 30; });
+      pieces.forEach(function (p) {
+        p.vy += 0.38;
+        p.vx *= 0.99;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.r += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.r);
+        ctx.fillStyle = p.c;
+        ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2);
+        ctx.restore();
+      });
+      if (pieces.length) { requestAnimationFrame(tick); } else { running = false; }
+    }
+
+    function show(which) {
+      cover.hidden = which !== "cover";
+      inside.hidden = which !== "inside";
+      window.scrollTo(0, 0);
+    }
+
+    document.getElementById("open").addEventListener("click", function () {
+      show("inside");
+      burst();
+    });
+    document.getElementById("boom").addEventListener("click", burst);
+    document.getElementById("back").addEventListener("click", function () { show("cover"); });
+  })();
+</script>
