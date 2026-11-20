@@ -60,12 +60,12 @@
     margin: 0 0 1rem;
   }
 
-  h1 {
-    font: 50vh clamp(0, 50vw, 4.2rem)/0.95 var(--display);
-    margin: 0 0 1.25rem;
-    text-transform: uppercase;
-    text-wrap: balance;
-  }
+  .card { container-type: inline-size; }
+
+h1 {
+  font: 400 clamp(2.4rem, 15cqw, 7rem)/1 var(--display);
+}
+
   h1 .hl-pink { color: var(--pink); }
   h1 .hl-blue { color: var(--blue); }
   h1 .name {
@@ -78,10 +78,8 @@
   }
 
   h2 {
-    font: 25vh clamp(1.8rem, 25vw, 2.4rem)/1 var(--display);
-    text-transform: uppercase;
-    margin: 0 0 1rem;
-  }
+  font: 400 clamp(1.8rem, 9cqw, 3.2rem)/1 var(--display);
+}
 
   p { margin: 0 0 1rem; max-width: 36rem; }
   .lede { font-size: 1.15rem; font-weight: 500; }
@@ -155,7 +153,7 @@ body { display: flex; flex-direction: column; min-height: 100dvh; }
 
 .stage { flex: 1; display: flex; flex-direction: column; max-width: none; }
 
-.card { flex: 1; }
+.card { flex: 1; justify-content: center;}
 </style>
 
 <main class="stage">
